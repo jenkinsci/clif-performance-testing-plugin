@@ -6,7 +6,6 @@
 		<artifactId>plugin</artifactId>
 		<version>2.13</version>
 	</parent>
-	<groupId>org.ow2.clif</groupId>
 	<artifactId>clif-performance-testing</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>hpi</packaging>
@@ -26,14 +25,11 @@
 		<jenkins.version>2.13</jenkins.version>
 	</properties>
 
-	<!-- get every artifact through repo.jenkins-ci.org, which proxies all the artifacts that we need -->
 	<repositories>
 		<repository>
 			<id>repo.jenkins-ci.org</id>
 			<url>http://repo.jenkins-ci.org/public/</url>
 		</repository>
-		
-		<!-- CLIF artifacts can now be retrieved through OW2 repositories -->
     	<repository>
       		<releases><enabled>true</enabled></releases>
       		<snapshots><enabled>false</enabled></snapshots>
@@ -107,7 +103,6 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-				<!-- skip findbugs -->
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>findbugs-maven-plugin</artifactId>
@@ -261,4 +256,11 @@
 			<archive>http://mail-archive.ow2.org/clif-commits/</archive>
 		</mailingList>
 	</mailingLists>
+
+	<distributionManagement>
+		<repository>
+    		<id>maven.jenkins-ci.org</id>
+			<url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
+		</repository>
+	</distributionManagement>
 </project>
