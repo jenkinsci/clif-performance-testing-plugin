@@ -1,0 +1,30 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
+         xmlns:l="/lib/layout">
+	<l:layout title="Clif Project Report">
+		<st:include it="${it.project}" page="sidepanel.jelly"/>
+		<l:main-panel>
+			<h1>${%Clif Project Report}</h1>
+			<div>
+				<a href="../lastBuild/clif/">${%Last Report}</a>
+				<br/>
+			</div>
+			<j:forEach var="testPlanName" items="${it.actionsAvailable.keySet()}">
+				<div style="margin-left: auto; margin-right: auto;">
+					<h2>${testPlanName}</h2>
+					<j:set var="actions" value="${it.actionsAvailable.get(testPlanName)}"/>
+					<j:forEach var="action" items="${actions}">
+						<a href="actionGraph?testPlan=${testPlanName}&amp;label=${action}&amp;width=900&amp;height=600">
+							<img src="actionGraph?testPlan=${testPlanName}&amp;label=${action}&amp;width=400&amp;height=250"
+							     height="250" width="400"/>
+						</a>
+						<a href="actionErrorGraph?testPlan=${testPlanName}&amp;label=${action}&amp;width=900&amp;height=600">
+							<img src="actionErrorGraph?testPlan=${testPlanName}&amp;label=${action}&amp;width=400&amp;height=250"
+							     height="250" width="400"/>
+						</a>
+					</j:forEach>
+				</div>
+			</j:forEach>
+		</l:main-panel>
+	</l:layout>
+</j:jelly>

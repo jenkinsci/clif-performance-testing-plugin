@@ -1,0 +1,36 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core"
+         xmlns:f="/lib/form">
+	<j:if test="${!empty(descriptor.installations)}">
+		<f:entry title="${%Clif Version}">
+			<select class="setting-input" name="clif.clifName">
+				<j:forEach var="inst" items="${descriptor.installations}">
+					<f:option selected="${inst.name==instance.clif.name}" value="${inst.name}">${inst.name}</f:option>
+				</j:forEach>
+			</select>
+		</f:entry>
+	</j:if>
+	<j:if test="${empty(descriptor.installations)}">
+		<!-- no clif installation is configured. this will be an error, so warn the user now -->
+		<f:entry title="${%Clif Version}">
+			<div class="error">
+				${%Clif Version.error.1}&lt;br&gt;
+				${%Clif Version.error.2(rootURL)}
+			</div>
+		</f:entry>
+
+	</j:if>
+	<f:entry title="${%TestPlan to run}">
+		<f:textbox name="testPlanFile" value="${instance.testPlanFile}"
+		           checkUrl="'${rootURL}/builder/ClifBuilder/checkTestPlanFile?value='+escape(this.value)"/>
+	</f:entry>
+	<f:advanced>
+		<f:entry title="${%Java Options}" help="/plugin/clif-jenkins-plugin/help-clif-opts.html">
+			<f:expandableTextbox name="clif.clifOpts" value="${instance.clifOpts}"/>
+		</f:entry>
+		<f:entry title="${%Clif report directory}">
+			<f:textbox name="reportDir" value="${instance.reportDir}" default="report"
+			           checkUrl="'${rootURL}/builder/ClifBuilder/checkReportDir?value='+escape(this.value)"/>
+		</f:entry>
+	</f:advanced>
+</j:jelly>

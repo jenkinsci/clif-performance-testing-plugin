@@ -1,0 +1,85 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout"
+         xmlns:f="/lib/form">
+	<l:layout title="clif" secured="true">
+		<l:side-panel>
+			<l:tasks>
+				<l:task icon="images/24x24/up.gif" href="${rootURL}/" title="${%Back to Dashboard}"/>
+			</l:tasks>
+		</l:side-panel>
+		<l:main-panel>
+			<h1>${%title}</h1>
+			<f:form method="post" action="process">
+				<f:section title="${%label.version}">
+					<f:entry title="${%input.clif}">
+						<select class="setting-input" name="clif">
+							<j:forEach var="clif" items="${it.clifs()}">
+								<f:option value="${clif.name}">${clif.name}</f:option>
+							</j:forEach>
+						</select>
+					</f:entry>
+				</f:section>
+
+				<j:if test="${it.upgrades.size() > 0}">
+					<f:block>
+						<div style="height:20px"/>
+						<div class="section-header">
+							<img src='${imagesURL}/24x24/refresh.png' height='16' width='16'/>
+							${%title.upgrade}
+						</div>
+
+					</f:block>
+
+					<j:forEach var="f" items="${it.upgrades}">
+						<f:block>
+							<p>
+								<em>${f}</em>
+							</p>
+							<input id="${f}[create]" name="${f}[create]" type="checkbox" checked="true"/>
+							<label for="${f}[create]">${%label.purge}</label>
+						</f:block>
+					</j:forEach>
+				</j:if>
+
+				<j:if test="${it.installs.size() > 0}">
+					<f:block>
+						<div style="height:20px"/>
+						<div class="section-header">
+							<img src='${imagesURL}/24x24/new-package.png' height='16' width='16'/>
+							${%title.install}
+						</div>
+					</f:block>
+					<j:forEach var="f" items="${it.installs}">
+						<f:block>
+							<f:checkbox id="${f}[create]" name="${f}[create]" checked="true"/>
+							<label for="${f}[create]">${f}</label>
+						</f:block>
+					</j:forEach>
+				</j:if>
+
+				<j:if test="${it.uninstalls.size() > 0}">
+					<f:block>
+						<div style="height:20px"/>
+						<div class="section-header">
+							<img src='${imagesURL}/24x24/edit-delete.png' height='16' width='16'/>
+							${%title.uninstall}
+						</div>
+					</f:block>
+					<j:forEach var="f" items="${it.uninstalls}">
+						<f:optionalBlock id="${f}[delete]" name="${f}[delete]" checked="true" title="${f}">
+							<f:entry>
+								<label for="${f}[rm]">${%label.delete}</label>
+								<f:checkbox id="${f}[rm]" name="${f}[rm]" checked="true"/>
+							</f:entry>
+						</f:optionalBlock>
+					</j:forEach>
+				</j:if>
+
+				<f:block>
+					<div style="height:20px"/>
+					<f:submit value="${%submit.validate}"/>
+				</f:block>
+			</f:form>
+		</l:main-panel>
+	</l:layout>
+</j:jelly>

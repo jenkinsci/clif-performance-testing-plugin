@@ -1,0 +1,11 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core">
+	<j:set var="alarms" value="${testPlan.getAlarms(level)}"/>
+	<j:if test="${alarms != null}">
+		<li>
+			<a href="#tab${level}">
+				<em>${tabName}</em>
+			</a>
+		</li>
+	</j:if>
+</j:jelly>

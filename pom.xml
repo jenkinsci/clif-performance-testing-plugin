@@ -1,0 +1,264 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jenkins-ci.plugins</groupId>
+		<artifactId>plugin</artifactId>
+		<version>2.13</version>
+	</parent>
+	<groupId>org.ow2.clif</groupId>
+	<artifactId>clif-performance-testing</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>hpi</packaging>
+	<name>CLIF Performance Testing</name>
+
+	<description>
+	This plug-in enables to run CLIF test plans from Jenkins and get detailed performance test reports,
+	including response time statistics, graphs, and performance trends (see http://clif.ow2.org).
+	Note: at least one CLIF server runtime to be installed along with this plug-in. 
+	</description>
+
+	<url>http://clif.ow2.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<jenkins.version>2.13</jenkins.version>
+	</properties>
+
+	<!-- get every artifact through repo.jenkins-ci.org, which proxies all the artifacts that we need -->
+	<repositories>
+		<repository>
+			<id>repo.jenkins-ci.org</id>
+			<url>http://repo.jenkins-ci.org/public/</url>
+		</repository>
+		
+		<!-- CLIF artifacts can now be retrieved through OW2 repositories -->
+    	<repository>
+      		<releases><enabled>true</enabled></releases>
+      		<snapshots><enabled>false</enabled></snapshots>
+      		<id>ow2.release</id>
+      		<name>OW2 release repository</name>
+      		<url>http://repository.ow2.org/nexus/content/repositories/releases/</url>
+    	</repository>
+    	<repository>
+      		<releases><enabled>false</enabled></releases>
+      		<id>ow2-snapshot</id>
+      		<name>OW2 Snapshot Repository</name>
+      		<url>http://repository.ow2.org/nexus/content/repositories/snapshots</url>
+    	</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>repo.jenkins-ci.org</id>
+			<url>http://repo.jenkins-ci.org/public/</url>
+		</pluginRepository>
+	</pluginRepositories>
+	<dependencies>
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>1.4.01</version>
+		</dependency>
+  		<dependency>
+    		<groupId>org.eclipse.jetty</groupId>
+    		<artifactId>jetty-server</artifactId>
+    		<version>9.1.5.v20140505</version>
+    		<scope>test</scope>
+  		</dependency>
+		<dependency>
+			<groupId>org.ow2.clif</groupId>
+			<artifactId>clif-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-math</groupId>
+			<artifactId>commons-math</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jenkins-ci.plugins</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert</artifactId>
+			<version>1.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+    		<groupId>org.jenkins-ci</groupId>
+    		<artifactId>symbol-annotation</artifactId>
+		    <version>1.5</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- skip findbugs -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<configuration>
+						<skip>false</skip>
+   					</configuration>
+				</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only.
+						It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.jenkins-ci.tools</groupId>
+										<artifactId>maven-hpi-plugin</artifactId>
+										<versionRange>[1.120,)</versionRange>
+										<goals>
+											<goal>insert-test</goal>
+											<goal>resolve-test-dependencies</goal>
+											<goal>test-hpl</goal>
+											<goal>validate</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-enforcer-plugin</artifactId>
+										<versionRange>[1.4.1,)</versionRange>
+										<goals>
+											<goal>display-info</goal>	
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.gmaven</groupId>
+										<artifactId>gmaven-plugin</artifactId>
+										<versionRange>[1.5,)</versionRange>
+										<goals>
+											<goal>generateTestStubs</goal>
+											<goal>testCompile</goal>	
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.jvnet.localizer</groupId>
+										<artifactId>maven-localizer-plugin</artifactId>
+										<versionRange>[1.23,)</versionRange>
+										<goals>
+											<goal>generate</goal>	
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.2</version>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<developers>
+		<developer>
+			<name>Vincent ROSSIGNOL</name>
+			<email>vincent1.rossignol (at) orange.com</email>
+			<organization>Orange Applications for Business</organization>
+			<organizationUrl>http://www.orange-business.com/fr/applications-for-business</organizationUrl>
+			<roles>
+				<role>mavenization</role>
+			</roles>
+			<timezone>Europe/Paris</timezone>
+		</developer>
+		<developer>
+			<name>Bruno DILLENSEGER</name>
+			<email>bruno.dillenseger (at) orange.com</email>
+			<organization>Orange Labs</organization>
+			<organizationUrl>http://www.orange.com/en/Innovation/Our-teams</organizationUrl>
+			<roles>
+				<role>CLIF project leader</role>
+				<role>developer</role>
+				<role>maintainer</role>
+			</roles>
+			<timezone>Europe/Paris</timezone>
+		</developer>
+		<developer>
+			<name>Julien COSTE</name>
+			<email>julien.coste (at) orange.com</email>
+			<organization>Orange Applications for Business</organization>
+			<organizationUrl>http://www.orange-business.com/fr/applications-for-business</organizationUrl>
+			<roles>
+				<role>Jenkins expert</role>
+				<role>developer</role>
+			</roles>
+			<timezone>Europe/Paris</timezone>
+		</developer>
+		<developer>
+			<name>Thierry HENRIO</name>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>Europe/Paris</timezone>
+		</developer>
+	</developers>
+
+	<organization>
+		<name>CLIF project</name>
+		<url>http://clif.ow2.org/</url>
+	</organization>
+
+	<mailingLists>
+		<mailingList>
+			<name>CLIF general mailing list</name>
+			<subscribe>mailto:clif-subscribe@ow2.org</subscribe>
+			<unsubscribe>mailto:clif-unsubscribe@ow2.org</unsubscribe>
+			<post>clif@ow2.org</post>
+			<archive>http://mail-archive.ow2.org/clif/</archive>
+		</mailingList>
+		<mailingList>
+			<name>CLIF developers mailing list</name>
+			<subscribe>mailto:clif-commits-subscribe@ow2.org</subscribe>
+			<unsubscribe>mailto:clif-commits-unsubscribe@ow2.org</unsubscribe>
+			<post>clif-commits@ow2.org</post>
+			<archive>http://mail-archive.ow2.org/clif-commits/</archive>
+		</mailingList>
+	</mailingLists>
+</project>

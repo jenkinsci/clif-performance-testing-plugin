@@ -1,0 +1,29 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core">
+	<j:set var="alarms" value="${testPlan.getAlarms(level)}"/>
+	<j:if test="${alarms != null}">
+
+		<div id="tab${level}">
+			<table class="pane sortable" id="alarm${level}">
+				<tr>
+					<td class="pane-header" width="10%">${%Date}</td>
+					<td class="pane-header" width="15%">${%Server}</td>
+					<td class="pane-header" width="15%">${%Type}</td>
+					<td class="pane-header" width="10%">${%Id}</td>
+					<td class="pane-header" width="50%">${%Message}</td>
+				</tr>
+				<tbody>
+					<j:forEach var="alarm" items="${alarms}">
+						<tr>
+							<td class="pane">${alarm.date}</td>
+							<td class="pane">${alarm.ownerServer}</td>
+							<td class="pane">${alarm.ownerType}</td>
+							<td class="pane">${alarm.ownerId}</td>
+							<td class="pane">${alarm.message}</td>
+						</tr>
+					</j:forEach>
+				</tbody>
+			</table>
+		</div>
+	</j:if>
+</j:jelly>

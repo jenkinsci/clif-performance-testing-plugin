@@ -1,0 +1,23 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core"
+		>
+	<tr>
+		<j:invokeStatic var="urlBlade" className="hudson.Util" method="rawEncode">
+			<j:arg value="${bladeId}" type="java.lang.String"/>
+		</j:invokeStatic>
+		<j:invokeStatic var="urlLabel" className="hudson.Util" method="rawEncode">
+			<j:arg value="${it.name}" type="java.lang.String"/>
+		</j:invokeStatic>
+		<td>
+			<a href="callChart?testPlan=${urlTest}&amp;bladeId=${urlBlade}&amp;label=${urlLabel}&amp;width=900&amp;height=600">
+				${it.name}
+			</a>
+		</td>
+		<td align="right">${it.sizeFormated}</td>
+		<td align="right">${it.average}</td>
+		<td align="right">${it.median}</td>
+		<td align="right">${it.min}</td>
+		<td align="right">${it.max}</td>
+		<td align="right">${it.stdDevFormated}</td>
+	</tr>
+</j:jelly>

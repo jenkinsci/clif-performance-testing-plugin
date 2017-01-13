@@ -1,0 +1,45 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core"
+         xmlns:f="/lib/form">
+	<f:entry title="${%Name}" field="name">
+		<f:textbox/>
+	</f:entry>
+	<f:entry title="${%Home directory}" field="home">
+		<f:textbox/>
+	</f:entry>
+	<f:entry title="${%Java options}">
+		<f:textbox
+			name="options"
+			value="${instance.clifProActiveConfig.options}"/>
+	</f:entry>
+
+	<f:entry title="${%Use ProActive Scheduler}" help="/plugin/clif-jenkins-plugin/help-clifInstallation-proactive.html">
+		<table width="100%">
+			<f:optionalBlock name="clifProActiveConfig" title="${%Yes}" checked="${instance.runWithScheduler}">
+				<f:entry title="${%Scheduler URL}">
+					<f:textbox name="schedulerURL" value="${instance.clifProActiveConfig.schedulerURL}"/>
+				</f:entry>
+				<f:entry title="${%Scheduler credentials file}">
+					<f:textbox
+						name="schedulerCredentialsFile"
+						value="${instance.clifProActiveConfig.schedulerCredentialsFile}"/>
+				</f:entry>
+				<f:entry title="${%Scheduler login}">
+					<f:textbox
+						name="schedulerLogin"
+						value="${instance.clifProActiveConfig.schedulerLogin}"/>
+				</f:entry>
+				<f:entry title="${%Scheduler password}">
+					<f:password
+						name="schedulerPassword"
+						value="${instance.clifProActiveConfig.schedulerPassword}"/>
+				</f:entry>
+				<f:validateButton
+					title="${%Check installation}"
+					progress="${%Testing...}"
+					method="checkInstallation"
+					with="home,schedulerURL,schedulerCredentialsFile,schedulerLogin,schedulerPassword"/>
+			</f:optionalBlock>
+		</table>
+	</f:entry>
+</j:jelly>

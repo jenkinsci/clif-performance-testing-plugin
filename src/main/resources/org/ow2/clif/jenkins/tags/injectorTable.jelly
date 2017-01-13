@@ -1,0 +1,53 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+	<tr>
+		<j:if test="${urlTest != null}">
+			<j:invokeStatic var="urlBlade" className="hudson.Util" method="rawEncode">
+				<j:arg value="${bladeId}" type="java.lang.String"/>
+			</j:invokeStatic>
+			<j:invokeStatic var="urlLabel" className="hudson.Util" method="rawEncode">
+				<j:arg value="${it.name}" type="java.lang.String"/>
+			</j:invokeStatic>
+			<td>
+				${it.name}
+				<a href="callChart?testPlan=${urlTest}&amp;bladeId=${urlBlade}&amp;label=${urlLabel}">
+					<img src="${rootURL}/plugin/clif-jenkins-plugin/images/nuage.png" width="16" height="16"
+					     title="${%Tooltip.CallChart}"/>
+				</a>
+				<st:nbsp/>
+				<a href="movingStatChart?testPlan=${urlTest}&amp;bladeId=${urlBlade}&amp;label=${urlLabel}">
+					<img src="${rootURL}/plugin/clif-jenkins-plugin/images/call.png" width="16" height="16"
+					     title="${%Tooltip.MovingStatChart}"/>
+				</a>
+				<st:nbsp/>
+				<a href="fixedSliceNumberDistributionChart?testPlan=${urlTest}&amp;bladeId=${urlBlade}&amp;label=${urlLabel}">
+					<img src="${rootURL}/plugin/clif-jenkins-plugin/images/distribution2.png" width="16" height="16"
+					     title="${%Tooltip.FixedSliceNumberDistributionChart}"/>
+				</a>
+				<st:nbsp/>
+				<a href="fixedSliceSizeDistributionChart?testPlan=${urlTest}&amp;bladeId=${urlBlade}&amp;label=${urlLabel}">
+					<img src="${rootURL}/plugin/clif-jenkins-plugin/images/distribution2.png" width="16" height="16"
+					     title="${%Tooltip.FixedSliceSizeDistributionChart}"/>
+				</a>
+				<a href="quantileDistributionChart?testPlan=${urlTest}&amp;bladeId=${urlBlade}&amp;label=${urlLabel}">
+					<img src="${rootURL}/plugin/clif-jenkins-plugin/images/quantile.png" width="16" height="16"
+					     title="${%Tooltip.QuantileDistributionChart}"/>
+				</a>
+			</td>
+
+		</j:if>
+		<j:if test="${urlTest == null}">
+			<td>${it.name}</td>
+		</j:if>
+		<td align="right">${it.countActions()}</td>
+		<td align="right">${it.sizeFormated}</td>
+		<td align="right">${it.countErrors()}</td>
+		<td align="right">${it.average}</td>
+		<td align="right">${it.median}</td>
+		<td align="right">${it.min}</td>
+		<td align="right">${it.max}</td>
+		<td align="right">${it.stdDevFormated}</td>
+		<td align="right">${it.throughputFormated}</td>
+		<td align="right">${it.errorPercentFormated()}</td>
+	</tr>
+</j:jelly>

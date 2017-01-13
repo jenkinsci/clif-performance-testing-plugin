@@ -1,0 +1,8 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core"
+         xmlns:f="/lib/form">
+	<f:entry title="Alias action pattern" description="Alias action pattern">
+		<f:textbox name="pattern" value="${instance.pattern}"/>
+		<f:textbox name="value" value="${instance.value}"/>
+	</f:entry>
+</j:jelly>

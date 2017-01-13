@@ -1,0 +1,18 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core">
+	<thead>
+		<tr>
+			<td width="44%" class="pane-header" title="${%Title.Label}">${%Label}</td>
+			<td width="7%" class="pane-header" align="center" title="${%Title.Samples}">${%Samples}</td>
+			<td width="7%" class="pane-header" align="center" title="${%Title.Success}">${%Success}</td>
+			<td width="7%" class="pane-header" align="center" title="${%Title.Errors}">${%Errors}</td>
+			<td width="7%" class="pane-header" align="center" title="${%Title.Avg}">${%Avg}</td>
+			<td width="7%" class="pane-header" align="center" title="${%Title.Median}">${%Median}</td>
+			<td width="7%" class="pane-header" align="center" title="${%Title.Min}">${%Min}</td>
+			<td width="7%" class="pane-header" align="center" title="${%Title.Max}">${%Max}</td>
+			<td width="7%" class="pane-header" align="center" title="${%Title.Std}">${%Std}</td>
+			<td width="7%" class="pane-header" align="center" title="${%Title.Throughput}">${%Throughput}</td>
+			<td width="7%" class="pane-header" align="center" title="${%Title.ErrorPercent}">${%ErrorPercent}</td>
+		</tr>
+	</thead>
+</j:jelly>

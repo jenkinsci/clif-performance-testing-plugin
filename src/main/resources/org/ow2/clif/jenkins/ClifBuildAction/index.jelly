@@ -1,0 +1,124 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
+         xmlns:l="/lib/layout">
+
+	<script type="text/javascript" src="${rootURL}/plugin/clif-jenkins-plugin/yui/utilities.js"></script>
+	<script type="text/javascript" src="${rootURL}/plugin/enkins-clif-plugin/yui/tabview-min.js"></script>
+	<script type="text/javascript" src="${rootURL}/plugin/enkins-clif-plugin/yui/dispatcher-min.js"></script>
+
+
+	<l:layout title="Clif Report" xmlns:g="/org/ow2/clif/jenkins/tags">
+		<st:include it="${it.build}" page="sidepanel.jelly"/>
+		<l:main-panel>
+			<h1>${%Title}</h1>
+
+			<j:forEach var="testPlan" items="${it.report.testplans}">
+
+				<h2>${testPlan.name} - ${testPlan.date}</h2>
+				<j:forEach var="serverName" items="${testPlan.servers}">
+					<div style="margin-left: 20px;">
+						<h3>${%Server} - ${serverName}</h3>
+						<div style="margin-left: 20px;">
+							<j:set var="probes" value="${testPlan.getProbesByServer(serverName)}"/>
+							<j:forEach var="probe" items="${probes}">
+								<div style="font-weight:bold; border-bottom: 1px solid black; margin-bottom:0.2em; margin-top:0.4em">
+									${%Probe} - ${probe.name} (
+									<j:if test="${probe.argument!=null}">${%Argument}=${probe.argument}</j:if>
+									<j:if test="${probe.comment!=null}"><st:nbsp/>${%Comment}=${probe.comment}
+									</j:if>
+									)
+								</div>
+								<div style="margin-left: 10px;">
+									<table border="1px" class="pane sortable">
+										<g:probeHeader/>
+										<tbody>
+											<j:forEach var="measure" items="${probe.measures}">
+												<g:probeTable it="${measure}" urlTest="${testPlan.nameURL}"
+												              bladeId="${probe.id}"/>
+											</j:forEach>
+										</tbody>
+									</table>
+								</div>
+							</j:forEach>
+							<!-- Probes -->
+
+							<j:set var="injectors" value="${testPlan.getInjectorsByServer(serverName)}"/>
+							<j:forEach var="injector" items="${injectors}">
+								<div style="font-weight:bold; border-bottom: 1px solid black; margin-bottom:0.2em; margin-top:0.4em">
+									${%Injector} - ${injector.id} - ${injector.name} (
+									<j:if test="${injector.argument!=null}">${%Argument}=${injector.argument}</j:if>
+									<j:if test="${injector.comment!=null}"><st:nbsp/>${%Comment}=${injector.comment}
+									</j:if>
+									)
+								</div>
+								<div style="margin-left: 10px;">
+									<table border="1px" class="pane sortable">
+										<g:injectorHeader/>
+										<tbody>
+											<j:forEach var="measure" items="${injector.measures}">
+												<g:injectorTable it="${measure}" loadAction="${it}"
+												                 urlTest="${testPlan.nameURL}"
+												                 bladeId="${injector.id}"/>
+											</j:forEach>
+										</tbody>
+									</table>
+								</div>
+							</j:forEach>
+							<!-- Injectors -->
+						</div>
+					</div>
+				</j:forEach>
+				<!-- Servers -->
+
+				<div style="margin-left: 20px;">
+					<h3>${%Aggregated Values}</h3>
+					<div style="margin-left: 20px;">
+						<div style="margin-left: 10px;">
+							<table border="1px" class="pane sortable">
+								<g:injectorHeader/>
+								<tbody>
+									<j:forEach var="measure" items="${testPlan.aggregatedMeasures}">
+										<g:injectorTable it="${measure}" loadAction="${it}"
+										                 urlTest="${testPlan.nameURL}" bladeId="aggregated"/>
+									</j:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<j:if test="${testPlan.alarms != null}">
+					<div style="margin-left: 20px;">
+						<h3>${%Alarms}</h3>
+						<div style="margin-left: 20px;">
+							<div style="margin-left: 10px;">
+								<div id="alarms${testPlan.name}" class="yui-navset">
+									<ul class="yui-nav">
+										<g:alarmTab testPlan="${testPlan}" level="INFO" tabName="${%AlarmInfo}"/>
+										<g:alarmTab testPlan="${testPlan}" level="WARNING" tabName="${%AlarmWarning}"/>
+										<g:alarmTab testPlan="${testPlan}" level="ERROR" tabName="${%AlarmError}"/>
+										<g:alarmTab testPlan="${testPlan}" level="FATAL" tabName="${%AlarmFatal}"/>
+									</ul>
+									<div class="yui-content">
+										<g:alarm testPlan="${testPlan}" level="INFO"/>
+										<g:alarm testPlan="${testPlan}" level="WARNING"/>
+										<g:alarm testPlan="${testPlan}" level="ERROR"/>
+										<g:alarm testPlan="${testPlan}" level="FATAL"/>
+									</div>
+
+									<script type="text/javascript">
+										var tabView = new YAHOO.widget.TabView('alarms${testPlan.name}');
+										tabView.getTab(0).active = true;
+									</script>
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+				</j:if>
+			</j:forEach>
+			<!-- TestPlan -->
+		</l:main-panel>
+	</l:layout>
+</j:jelly>

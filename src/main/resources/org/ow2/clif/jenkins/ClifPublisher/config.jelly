@@ -1,0 +1,128 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core"
+         xmlns:f="/lib/form">
+	<f:entry title="${%ClifReportDirectory}" help="/plugin/clif-jenkins-plugin/help-projectConfig-clifdir.html">
+		<f:textbox name="clif.clifReportDirectory"
+		           value="${instance.clifReportDirectory}"
+		           default="report"
+		           checkUrl="'${rootURL}/publisher/ClifPublisher/checkClifReportDirectory?value='+escape(this.value)"/>
+	</f:entry>
+	<f:advanced>
+		<f:entry title="${%Action Aliases}" help="/plugin/clif-jenkins-plugin/help-projectConfig-alias.html">
+			<f:repeatable var="inst" items="${instance.alias}">
+				<table width="100%">
+					<tr>
+						<td>${%Pattern}</td>
+						<td>
+							<f:textbox name="clif.alias.pattern"
+							           value="${inst.pattern}"/>
+						</td>
+						<td>${%Alias}</td>
+						<td>
+							<f:textbox name="clif.alias.value"
+							           value="${inst.value}"/>
+						</td>
+						<td>
+							<f:repeatableDeleteButton/>
+						</td>
+					</tr>
+				</table>
+			</f:repeatable>
+
+		</f:entry>
+
+		<f:entry title="${%Action success configuration}"
+		         help="/plugin/clif-jenkins-plugin/help-projectConfig-actionSuccess.html">
+			<f:repeatable var="inst" items="${instance.successPatterns}">
+				<table width="100%">
+					<tr>
+						<td>${%Action type}</td>
+						<td>
+							<f:textbox name="clif.successPatterns.actionType"
+							           value="${inst.actionType}"
+									/>
+						</td>
+						<td>${%Successful result pattern}</td>
+						<td>
+							<f:textbox name="clif.successPatterns.patternSuccessfulResult"
+							           value="${inst.patternSuccessfulResult}"
+									/>
+						</td>
+						<td>
+							<f:repeatableDeleteButton/>
+						</td>
+					</tr>
+				</table>
+			</f:repeatable>
+		</f:entry>
+
+		<f:entry title="${%Date filtering}" help="/plugin/clif-jenkins-plugin/help-projectConfig-dateFiltering.html">
+			<table>
+				<f:optionalBlock name="clif.dateFiltering" title="${%Enabled}" checked="${instance.dateFiltering}">
+					<f:entry title="${%From}">
+						<f:textbox name="clif.minTimestamp"
+						           value="${instance.minTimestamp}"
+						           checkUrl="'${rootURL}/publisher/ClifPublisher/checkMinTimestamp?value='+escape(this.value)"/>
+					</f:entry>
+					<f:entry title="${%To}">
+						<f:textbox name="clif.maxTimestamp"
+						           value="${instance.maxTimestamp}"
+						           checkUrl="'${rootURL}/publisher/ClifPublisher/checkMaxTimestamp?value='+escape(this.value)"/>
+					</f:entry>
+				</f:optionalBlock>
+			</table>
+		</f:entry>
+		<f:entry title="${%Data cleanup}" help="/plugin/clif-jenkins-plugin/help-projectConfig-dataCleanup.html">
+			<table>
+				<f:optionalBlock name="clif.datacleanup.enabled" title="${%Enabled}"
+				                 checked="${instance.dataCleanupConfig.enabled}">
+					<f:entry title="${%Keep factor}">
+						<f:textbox name="clif.datacleanup.keepFactor"
+						           value="${instance.dataCleanupConfig.keepFactor}"
+						           default="2"
+						           checkUrl="'${rootURL}/publisher/ClifPublisher/checkKeepFactor?value='+escape(this.value)"/>
+					</f:entry>
+					<f:entry title="${%Keep percentage}">
+						<f:textbox name="clif.datacleanup.keepPercentage"
+						           value="${instance.dataCleanupConfig.keepPercentage}"
+						           default="95"
+						           checkUrl="'${rootURL}/publisher/ClifPublisher/checkKeepPercentage?value='+escape(this.value)"/>
+					</f:entry>
+				</f:optionalBlock>
+			</table>
+		</f:entry>
+		<f:entry title="${%Chart configuration}">
+			<table>
+				<f:entry title="${%Chart width}">
+					<f:textbox name="clif.chartWidth"
+					           value="${instance.chartWidth}"
+					           default="1200"
+					           checkUrl="'${rootURL}/publisher/ClifPublisher/checkChartWidth?value='+escape(this.value)"/>
+				</f:entry>
+				<f:entry title="${%Chart height}">
+					<f:textbox name="clif.chartHeight"
+					           value="${instance.chartHeight}"
+					           default="600"
+					           checkUrl="'${rootURL}/publisher/ClifPublisher/checkChartHeight?value='+escape(this.value)"/>
+				</f:entry>
+				<f:entry title="${%Distribution chart slice size}">
+					<f:textbox name="clif.distributionSliceSize"
+					           value="${instance.distributionSliceSize}"
+					           default="50"
+					           checkUrl="'${rootURL}/publisher/ClifPublisher/checkDistributionSliceSize?value='+escape(this.value)"/>
+				</f:entry>
+				<f:entry title="${%Distribution chart slice number}">
+					<f:textbox name="clif.distributionSliceNumber"
+					           value="${instance.distributionSliceNumber}" default="15"
+					           checkUrl="'${rootURL}/publisher/ClifPublisher/checkDistributionSliceNumber?value='+escape(this.value)"/>
+				</f:entry>
+				<f:entry title="${%Statistical period}">
+					<f:textbox name="clif.statisticalPeriod"
+					           value="${instance.statisticalPeriod}"
+					           default="5"
+					           checkUrl="'${rootURL}/publisher/ClifPublisher/checkStatisticalPeriod?value='+escape(this.value)"/>
+				</f:entry>
+			</table>
+		</f:entry>
+	</f:advanced>
+</j:jelly>
