@@ -204,8 +204,9 @@
 			<timezone>Europe/Paris</timezone>
 		</developer>
 		<developer>
+			<id>dillense</id>
 			<name>Bruno DILLENSEGER</name>
-			<email>bruno.dillenseger (at) orange.com</email>
+			<email>clif@ow2.org</email>
 			<organization>Orange Labs</organization>
 			<organizationUrl>http://www.orange.com/en/Innovation/Our-teams</organizationUrl>
 			<roles>
