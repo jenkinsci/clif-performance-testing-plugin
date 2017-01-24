@@ -4,11 +4,11 @@
 		<tr>
 			<td width="52%" class="pane-header" title="Label">${%Label}</td>
 			<td width="8%" class="pane-header" align="right" title="Number of samples">${%Samples}</td>
-			<td width="8%" class="pane-header" align="right" title="Mean value (in ms)">${%Avg}</td>
-			<td width="8%" class="pane-header" align="right" title="Median value (in ms)">${%Median}</td>
-			<td width="8%" class="pane-header" align="right" title="Min value (in ms)">${%Min}</td>
-			<td width="8%" class="pane-header" align="right" title="Max value (in ms)">${%Max}</td>
-			<td width="8%" class="pane-header" align="right" title="Standard deviation (in ms)">${%Std}</td>
+			<td width="8%" class="pane-header" align="right" title="Mean value">${%Avg}</td>
+			<td width="8%" class="pane-header" align="right" title="Median value">${%Median}</td>
+			<td width="8%" class="pane-header" align="right" title="Min value">${%Min}</td>
+			<td width="8%" class="pane-header" align="right" title="Max value">${%Max}</td>
+			<td width="8%" class="pane-header" align="right" title="Standard deviation">${%Std}</td>
 		</tr>
 	</thead>
 </j:jelly>
