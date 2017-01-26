@@ -258,10 +258,11 @@
 		</mailingList>
 	</mailingLists>
 
-	<distributionManagement>
-		<repository>
-    		<id>maven.jenkins-ci.org</id>
-			<url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
-		</repository>
-	</distributionManagement>
+	<scm>
+		<connection>scm:git:https://github.com/jenkinsci/clif-performance-testing-plugin.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:jenkinsci/clif-performance-testing-plugin.git</developerConnection>
+		<url>https://github.com/jenkinsci/clif-performance-testing-plugin</url>
+		<tag>HEAD</tag>
+	</scm>
+
 </project>
