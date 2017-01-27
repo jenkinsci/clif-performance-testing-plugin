@@ -259,7 +259,7 @@
 	</mailingLists>
 
 	<scm>
-		<connection>scm:git:https://github.com/jenkinsci/clif-performance-testing-plugin.git</connection>
+		<connection>scm:git:ssh://github.com:jenkinsci/clif-performance-testing-plugin.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com:jenkinsci/clif-performance-testing-plugin.git</developerConnection>
 		<url>https://github.com/jenkinsci/clif-performance-testing-plugin</url>
 		<tag>HEAD</tag>
