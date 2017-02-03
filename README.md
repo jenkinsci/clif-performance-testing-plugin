@@ -1,5 +1,5 @@
-clif-jenkins-plugin
-===================
+clif-performance-testing
+========================
 
 Plug-in for integrating CLIF performance testing into the Jenkins continuous integration server.
 
