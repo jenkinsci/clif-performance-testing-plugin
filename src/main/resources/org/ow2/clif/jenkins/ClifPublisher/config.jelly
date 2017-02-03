@@ -1,14 +1,14 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core"
          xmlns:f="/lib/form">
-	<f:entry title="${%ClifReportDirectory}" help="/plugin/clif-jenkins-plugin/help-projectConfig-clifdir.html">
+	<f:entry title="${%ClifReportDirectory}" help="/plugin/clif-performance-testing/help-projectConfig-clifdir.html">
 		<f:textbox name="clif.clifReportDirectory"
 		           value="${instance.clifReportDirectory}"
 		           default="report"
 		           checkUrl="'${rootURL}/publisher/ClifPublisher/checkClifReportDirectory?value='+escape(this.value)"/>
 	</f:entry>
 	<f:advanced>
-		<f:entry title="${%Action Aliases}" help="/plugin/clif-jenkins-plugin/help-projectConfig-alias.html">
+		<f:entry title="${%Action Aliases}" help="/plugin/clif-performance-testing/help-projectConfig-alias.html">
 			<f:repeatable var="inst" items="${instance.alias}">
 				<table width="100%">
 					<tr>
@@ -32,7 +32,7 @@
 		</f:entry>
 
 		<f:entry title="${%Action success configuration}"
-		         help="/plugin/clif-jenkins-plugin/help-projectConfig-actionSuccess.html">
+		         help="/plugin/clif-performance-testing/help-projectConfig-actionSuccess.html">
 			<f:repeatable var="inst" items="${instance.successPatterns}">
 				<table width="100%">
 					<tr>
@@ -56,7 +56,7 @@
 			</f:repeatable>
 		</f:entry>
 
-		<f:entry title="${%Date filtering}" help="/plugin/clif-jenkins-plugin/help-projectConfig-dateFiltering.html">
+		<f:entry title="${%Date filtering}" help="/plugin/clif-performance-testing/help-projectConfig-dateFiltering.html">
 			<table>
 				<f:optionalBlock name="clif.dateFiltering" title="${%Enabled}" checked="${instance.dateFiltering}">
 					<f:entry title="${%From}">
@@ -72,7 +72,7 @@
 				</f:optionalBlock>
 			</table>
 		</f:entry>
-		<f:entry title="${%Data cleanup}" help="/plugin/clif-jenkins-plugin/help-projectConfig-dataCleanup.html">
+		<f:entry title="${%Data cleanup}" help="/plugin/clif-performance-testing/help-projectConfig-dataCleanup.html">
 			<table>
 				<f:optionalBlock name="clif.datacleanup.enabled" title="${%Enabled}"
 				                 checked="${instance.dataCleanupConfig.enabled}">

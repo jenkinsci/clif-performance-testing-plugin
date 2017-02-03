@@ -224,7 +224,7 @@ public class ClifBuilder extends Builder
 
 		@Override
 		public String getHelpFile() {
-			return "/plugin/clif-jenkins-plugin/help-clif.html";
+			return "/plugin/clif-performance-testing/help-clif.html";
 		}
 
 		@Override
