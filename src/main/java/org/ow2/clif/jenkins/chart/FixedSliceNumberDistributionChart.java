@@ -72,6 +72,9 @@ public class FixedSliceNumberDistributionChart
 
 			double rangeStart = data.getStartX(0, 0).doubleValue();
 			double rangeEnd = data.getEndX(0, data.getItemCount(0) - 1).doubleValue();
+			if(rangeEnd == rangeStart) {
+				rangeEnd++;
+			}
 
 			NumberAxis domainAxis = new HistogramAxis(data, 0);
 			domainAxis.setAutoRangeIncludesZero(false);
