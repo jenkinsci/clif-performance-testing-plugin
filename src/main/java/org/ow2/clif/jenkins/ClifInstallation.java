@@ -39,6 +39,7 @@ import hudson.model.Hudson;
 import hudson.model.Node;
 import hudson.model.TaskListener;
 import hudson.remoting.Callable;
+import hudson.remoting.VirtualChannel;
 import hudson.slaves.NodeSpecific;
 import hudson.tools.ToolDescriptor;
 import hudson.tools.ToolInstallation;
@@ -105,7 +106,12 @@ public final class ClifInstallation
 	 */
 	public String getExecutable(Launcher launcher)
 			throws IOException, InterruptedException {
-		return launcher.getChannel().call(new Callable<String, IOException>() {
+		VirtualChannel channel = launcher.getChannel();
+		if (channel == null)
+		{
+			throw new IOException("The target node is not configured for remote execution");
+		}
+		return channel.call(new Callable<String, IOException>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -115,7 +121,7 @@ public final class ClifInstallation
 				if (exe.exists()) {
 					return exe.getPath();
 				}
-				return null;
+				throw new IOException("Could not find CLIF installation " + exe.getPath());
 			}
 
 			@Override
@@ -176,12 +182,12 @@ public final class ClifInstallation
 		// for compatibility reasons, persistence is done by ClifBuilder.DescriptorImpl
 		@Override
 		public ClifInstallation[] getInstallations() {
-			return Hudson.getInstance().getDescriptorByType(ClifBuilder.DescriptorImpl.class).getInstallations();
+			return Hudson.get().getDescriptorByType(ClifBuilder.DescriptorImpl.class).getInstallations();
 		}
 
 		@Override
 		public void setInstallations(ClifInstallation... installations) {
-			Hudson.getInstance().getDescriptorByType(ClifBuilder.DescriptorImpl.class).setInstallations(
+			Hudson.get().getDescriptorByType(ClifBuilder.DescriptorImpl.class).setInstallations(
 					installations);
 		}
 
@@ -193,7 +199,7 @@ public final class ClifInstallation
 		 */
 		public FormValidation doCheckHome(@QueryParameter File value) {
 			// this can be used to check the existence of a file on the server, so needs to be protected
-			if (!Hudson.getInstance().hasPermission(Hudson.ADMINISTER)) {
+			if (!Hudson.get().hasPermission(Hudson.ADMINISTER)) {
 				return FormValidation.ok();
 			}
 
