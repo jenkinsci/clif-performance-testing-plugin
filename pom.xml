@@ -29,26 +29,26 @@
 	<repositories>
 		<repository>
 			<id>repo.jenkins-ci.org</id>
-			<url>http://repo.jenkins-ci.org/public/</url>
+			<url>https://repo.jenkins-ci.org/public/</url>
 		</repository>
     	<repository>
       		<releases><enabled>true</enabled></releases>
       		<snapshots><enabled>false</enabled></snapshots>
       		<id>ow2.release</id>
       		<name>OW2 release repository</name>
-      		<url>http://repository.ow2.org/nexus/content/repositories/releases/</url>
+      		<url>https://repository.ow2.org/nexus/content/repositories/releases/</url>
     	</repository>
     	<repository>
       		<releases><enabled>false</enabled></releases>
       		<id>ow2-snapshot</id>
       		<name>OW2 Snapshot Repository</name>
-      		<url>http://repository.ow2.org/nexus/content/repositories/snapshots</url>
+      		<url>https://repository.ow2.org/nexus/content/repositories/snapshots</url>
     	</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
 			<id>repo.jenkins-ci.org</id>
-			<url>http://repo.jenkins-ci.org/public/</url>
+			<url>https://repo.jenkins-ci.org/public/</url>
 		</pluginRepository>
 	</pluginRepositories>
 	<dependencies>
