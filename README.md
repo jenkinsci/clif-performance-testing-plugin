@@ -55,19 +55,35 @@ is also maintained through test executions.
 #### Installing a CLIF runtime
 
 Prior to running or importing any CLIF test plans, you need to install
-at least one CLIF runtime, typically a 2.3.3+ "CLIF server"
+at least one CLIF runtime, typically a 2.3.7+ "CLIF server"
 distribution, available for download from
-[here](http://forge.ow2.org/project/showfiles.php?group_id=57).
+[here](https://clif.ow2.io/download/).
 
 Once you have unzipped this CLIF distribution, make sure you have a Java
 8+ execution environment installed.
 
 To check your CLIF installation, run this command line:
 
-[TABLE]
-
-[TABLE]
-
+- Windows (with cmd.exe):
+```
+C:\> C:\path\to\clif-2.3.3-server\bin\clifcmd version
+Caption=Microsoft Windows 7 Enterprise
+OSArchitecture=64-bit
+Name=Intel(R) Core(TM) i7-5600U CPU @ 2.60GHz
+java version "1.8.0_121"
+Java(TM) SE Runtime Environment (build 1.8.0_121-b13)
+Java HotSpot(TM) 64-Bit Server VM (build 25.121-b13, mixed mode)
+clif 2.3.8 compiled 2020-Jan-13, 08:56 GMT+0000 by root
+```
+- Linux:
+```
+$ /path/to/clif-2.3.3-server/bin/clifcmd version
+Linux 4.15.0-76-generic #86~16.04.1-Ubuntu SMP Mon Jan 20 11:02:50 UTC 2020 x86_64
+openjdk version "1.8.0_242"
+OpenJDK Runtime Environment (build 1.8.0_242-8u242-b08-0ubuntu3~16.04-b08)
+OpenJDK 64-Bit Server VM (build 25.242-b08, mixed mode)
+clif 2.3.8 compiled 2020-Jan-13, 08:56 GMT+0000 by root
+```
 In case Java can't be found, or the default Java environment is not
 appropriate, change your PATH environment variable so that the bin
 directory of the right Java runtime is found first.
@@ -81,9 +97,9 @@ page (Manage Jenkins\>Global Tool Configuration).
 Go to the Clif section, click on button **Clif installations...** and
 fill the fields:
 
--   name (say, "CLIF 2.3.3")
+-   name (say, "CLIF 2.3.8")
 -   home directory (CLIF runtime's root directory, say
-    "/path/to/clif-2.3.3-server")
+    "/path/to/clif-2.3.8-server")
 -   enter specific Java options to be set in CLIF's Java Virtual
     Machines running the tests (optional)
 -   Notes:
@@ -105,19 +121,19 @@ CLIF test job:
 
 -   either from a source code management system, as usual for Jenkins
     job;
--   or by using the import wizard provided by the plug-in and available
+-   or by using the CLIF import wizard provided by the plug-in and available
     in Jenkins' main menu.
 
 #### Via Source Code Management
 
 As mentioned at the top of this page, CLIF's main GUI is based on
 Eclipse. CLIF scenarios, test plans and possible data sets are grouped
-together in a CLIF project. It is straightforward to use a source code
-management (Svn, CVS, Git...) client provided by Eclipse to push this
+together in a CLIF project. It is straightforward to use a Source Code
+Management (Git, Svn...) client provided by Eclipse to push this
 project to an SCM repository.
 
 Once your CLIF project is available on an SCM repository, create a new
-Freestyle project (New Item... \> Freestyle Project). Go to the Source
+Freestyle project (`New Item... > Freestyle Project`). Go to the Source
 Code Management section and provide all necessary details about your
 project repository.
 
@@ -131,8 +147,8 @@ Then, go to the Build section, and add an **Invoke Clif** build step:
 
 Finally, you may be interested in adding a post-build action to
 automatically generate on each CLIF job successful completion. Refer to
-section below dedicated to [﻿CLIF reports
-configuration](#CLIFPerformanceTestingPlugin-CLIFreportsconfiguration).
+section below dedicated to [CLIF reports
+configuration](#clif-reports-configuration).
 
 #### Via the Import wizard
 
@@ -152,9 +168,7 @@ Click on **Validate** button.
 Note: the import wizard also adds a Publish Clif performance report
 post-build action. Refer to next section to configure CLIF reports.
 
-##  
-
-## CLIF Reports Configuration
+## CLIF Reports Configuration</a>
 
 [TABLE]
 
