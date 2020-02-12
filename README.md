@@ -1,5 +1,8 @@
 clif-performance-testing
 ========================
+[![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/clif-performance-testing.svg)](https://plugins.jenkins.io/clif-performance-testing)
+[![GitHub release](https://img.shields.io/github/release/jenkinsci/clif-performance-testing-plugin.svg?label=changelog)](https://github.com/jenkinsci/clif-performance-testing-plugin/releases/latest)
+[![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/clif-performance-testing.svg?color=blue)](https://plugins.jenkins.io/clif-performance-testing)
 
 Run your performance tests defined with
 [CLIF](http://clif.ow2.org/) from Jenkins, and get a variety of
