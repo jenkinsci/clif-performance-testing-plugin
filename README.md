@@ -45,10 +45,14 @@ is also maintained through test executions.
 
 ## Changelog
 
+#### v1.0.2
+
+- FIX: compatibility with Jenkins 2.198+ (some CLIF reports failing to be generated)
+
 #### v1.0.1
 
--   FIX: missing icons and help sections
--   IMPROVEMENT: removed useless dependency with ant plug-in
+- FIX: missing icons and help sections
+- IMPROVEMENT: removed useless dependency with ant plug-in
 
 ## Installation
 
@@ -170,9 +174,25 @@ post-build action. Refer to next section to configure CLIF reports.
 
 ## CLIF Reports Configuration</a>
 
-[TABLE]
+To get a performance report automatically generated on each successful CLIF job run, just add post-build action Publish CLIF performance report to the Post-build Actions section.  
+You shall keep the default value for parameter Clif report directory, unless you changed it for some reason in the advanced settings of the Invoke Clif build action.
 
-[TABLE]
+CLIF performance reports give for each job execution:
+
+- for each load injector, as well as for all load injectors combined:
+  * an array of response times statistics for each request type, as well as average throughput and total number of errors
+  * a collection of graphs about response times and throughput: scatter graph, moving statistics, distribution (histograms and quantiles)
+- for each probe:
+  * an array of statistics about each monitored value
+  * a scatter graph for each monitored value
+- for all probes and load injectors: an array of alarms 
+
+[![](docs/images/BuildPerformanceReport-mini.png)](docs/images/BuildPerformanceReport.png)
+[![](docs/images/JVMusage-mini.png)](docs/images/JVMusage.png)
+[![](docs/images/callChart-mini.png)](docs/images/callChart.png)
+[![](docs/images/movingStatChart-mini.png)](docs/images/movingStatChart.png)
+[![](docs/images/fixedSliceNumberDistributionChart-mini.png)](docs/images/fixedSliceNumberDistributionChart.png)
+[![](docs/images/quantileDistributionChart-mini.png)](docs/images/quantileDistributionChart.png)
 
 With the **Advanced** settings of *Publish Clif performance report*
 post-build action, you may set:
