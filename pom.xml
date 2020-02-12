@@ -16,7 +16,7 @@
 	Note: at least one CLIF server runtime to be installed along with this plug-in. 
 	</description>
 
-	<url>https://wiki.jenkins-ci.org/display/JENKINS/CLIF+Performance+Testing+Plugin</url>
+	<url>https://github.com/jenkinsci/clif-performance-testing</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
