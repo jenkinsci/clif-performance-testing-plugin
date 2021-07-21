@@ -73,7 +73,7 @@ public class ClifProActiveConfig
 	}
 
 	public Descriptor<ClifProActiveConfig> getDescriptor() {
-		return Hudson.getInstance().getDescriptorByType(ProActiveConfigDescriptor.class);
+		return Hudson.get().getDescriptorByType(ProActiveConfigDescriptor.class);
 	}
 
 	@Extension

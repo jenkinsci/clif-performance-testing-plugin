@@ -54,7 +54,7 @@ public class ClifDataCleanup
 	}
 
 	public Descriptor<ClifDataCleanup> getDescriptor() {
-		return Hudson.getInstance().getDescriptorByType(DataCleanupDescriptor.class);
+		return Hudson.get().getDescriptorByType(DataCleanupDescriptor.class);
 	}
 
 	@Extension
