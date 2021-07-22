@@ -1,7 +1,7 @@
 /*
  * CLIF is a Load Injection Framework
  * Copyright (C) 2012 France Telecom R&D
- * Copyright (C) 2016 Orange SA
+ * Copyright (C) 2016, 2021 Orange SA
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -55,6 +55,20 @@ public class Zip {
 		return file.getName();
 	}
 
+	public File sanitize(File entry)
+	throws IOException
+	{
+		File parent = entry.getParentFile();
+		if (parent == null)
+		{
+			return entry;
+		}
+		else
+		{
+			return new File(".", entry.getCanonicalPath());
+		}
+	}
+
 	/**
 	 * returns entry names of zip, matching given pattern if provided
 	 *
@@ -72,7 +86,7 @@ public class Zip {
 		}
 		ZipEntry entry;
 		while ((entry = zip.getNextEntry()) != null) {
-			String entryName = entry.getName();
+			String entryName = sanitize(new File(entry.getName())).getPath();
 			if (re == null || re.matcher(entryName).matches()) {
 				list.add(entryName);
 			}
