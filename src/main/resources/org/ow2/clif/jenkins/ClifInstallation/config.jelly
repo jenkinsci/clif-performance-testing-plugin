@@ -13,7 +13,7 @@
 			value="${instance.clifProActiveConfig.options}"/>
 	</f:entry>
 
-	<f:entry title="${%Use ProActive Scheduler}" help="/plugin/clif-performance-testing/help-clifInstallation-proactive.html">
+	<f:entry title="${%Use ProActive Scheduler}" help="${rootURL}/plugin/clif-performance-testing/help-clifInstallation-proactive.html">
 		<table width="100%">
 			<f:optionalBlock name="clifProActiveConfig" title="${%Yes}" checked="${instance.runWithScheduler}">
 				<f:entry title="${%Scheduler URL}">
