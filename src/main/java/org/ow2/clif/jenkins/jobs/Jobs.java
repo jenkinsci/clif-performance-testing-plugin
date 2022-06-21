@@ -46,7 +46,7 @@ public class Jobs {
 	}
 
 	public static FreeStyleProject newJob(String name) {
-		return newJob(Jenkins.getInstance(), name);
+		return newJob(Jenkins.get(), name);
 	}
 
 }

@@ -34,7 +34,7 @@ public class Installations {
 
 	public <I extends ToolInstallation> I[]
 	all(Class<? extends ToolDescriptor<I>> descriptor) {
-		return Jenkins.getInstance().getDescriptorByType(descriptor).getInstallations();
+		return Jenkins.get().getDescriptorByType(descriptor).getInstallations();
 	}
 
 	public <I extends ToolInstallation> I
