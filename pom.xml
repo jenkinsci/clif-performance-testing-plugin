@@ -6,7 +6,7 @@
 		<version>3.55</version>
 	</parent>
 	<artifactId>clif-performance-testing</artifactId>
-	<version>${revision}${changelist}</version>
+	<version>${changelist}</version>
 	<packaging>hpi</packaging>
 	<name>CLIF Performance Testing</name>
 
@@ -19,8 +19,7 @@
 	<url>https://github.com/jenkinsci/clif-performance-testing</url>
 
 	<properties>
-		<revision>1.0.3</revision>
-		<changelist>-SNAPSHOT</changelist>
+		<changelist>999999-SNAPSHOT</changelist>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<jenkins.version>2.138</jenkins.version>
