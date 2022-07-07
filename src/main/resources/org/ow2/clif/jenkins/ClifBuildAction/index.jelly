@@ -2,9 +2,9 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
          xmlns:l="/lib/layout">
 
-	<script type="text/javascript" src="/plugin/clif-performance-testing/yui/utilities.js"></script>
-	<script type="text/javascript" src="/plugin/clif-performance-testing/yui/tabview-min.js"></script>
-	<script type="text/javascript" src="/plugin/clif-performance-testing/yui/dispatcher-min.js"></script>
+	<script type="text/javascript" src="${rootURL}/plugin/clif-performance-testing/yui/utilities.js"></script>
+	<script type="text/javascript" src="${rootURL}/plugin/clif-performance-testing/yui/tabview-min.js"></script>
+	<script type="text/javascript" src="${rootURL}/plugin/clif-performance-testing/yui/dispatcher-min.js"></script>
 
 
 	<l:layout title="Clif Report" xmlns:g="/org/ow2/clif/jenkins/tags">

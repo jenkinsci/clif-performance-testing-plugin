@@ -11,26 +11,26 @@
 			<td>
 				${it.name}
 				<a href="callChart?testPlan=${urlTest}&amp;bladeId=${urlBlade}&amp;label=${urlLabel}">
-					<img src="/plugin/clif-performance-testing/images/nuage.png" width="16" height="16"
+					<img src="${rootURL}/plugin/clif-performance-testing/images/nuage.png" width="16" height="16"
 					     title="${%Tooltip.CallChart}"/>
 				</a>
 				<st:nbsp/>
 				<a href="movingStatChart?testPlan=${urlTest}&amp;bladeId=${urlBlade}&amp;label=${urlLabel}">
-					<img src="/plugin/clif-performance-testing/images/call.png" width="16" height="16"
+					<img src="${rootURL}/plugin/clif-performance-testing/images/call.png" width="16" height="16"
 					     title="${%Tooltip.MovingStatChart}"/>
 				</a>
 				<st:nbsp/>
 				<a href="fixedSliceNumberDistributionChart?testPlan=${urlTest}&amp;bladeId=${urlBlade}&amp;label=${urlLabel}">
-					<img src="/plugin/clif-performance-testing/images/distribution2.png" width="16" height="16"
+					<img src="${rootURL}/plugin/clif-performance-testing/images/distribution2.png" width="16" height="16"
 					     title="${%Tooltip.FixedSliceNumberDistributionChart}"/>
 				</a>
 				<st:nbsp/>
 				<a href="fixedSliceSizeDistributionChart?testPlan=${urlTest}&amp;bladeId=${urlBlade}&amp;label=${urlLabel}">
-					<img src="/plugin/clif-performance-testing/images/distribution2.png" width="16" height="16"
+					<img src="${rootURL}/plugin/clif-performance-testing/images/distribution2.png" width="16" height="16"
 					     title="${%Tooltip.FixedSliceSizeDistributionChart}"/>
 				</a>
 				<a href="quantileDistributionChart?testPlan=${urlTest}&amp;bladeId=${urlBlade}&amp;label=${urlLabel}">
-					<img src="/plugin/clif-performance-testing/images/quantile.png" width="16" height="16"
+					<img src="${rootURL}/plugin/clif-performance-testing/images/quantile.png" width="16" height="16"
 					     title="${%Tooltip.QuantileDistributionChart}"/>
 				</a>
 			</td>

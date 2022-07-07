@@ -1,6 +1,6 @@
 name: Maven CI
 
-on: [push]
+on: [ push, pull_request]
 
 jobs:
   build:
@@ -15,3 +15,12 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Copy plug-in
+      run: |
+        mkdir artifact
+        mv target/clif-performance-testing.hpi artifact/
+    - name: Make plug-in available for download
+      uses: actions/upload-artifact@v2
+      with:
+        name: clif-performance-testing-plugin
+        path: artifact
