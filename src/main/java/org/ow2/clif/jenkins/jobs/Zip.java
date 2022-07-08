@@ -22,6 +22,7 @@
 package org.ow2.clif.jenkins.jobs;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,18 +56,21 @@ public class Zip {
 		return file.getName();
 	}
 
-	public File sanitize(File entry)
+	public Path sanitize(Path entry)
 	throws IOException
 	{
-		File parent = entry.getParentFile();
-		if (parent == null)
+		entry = entry.normalize();
+		if (entry.isAbsolute())
 		{
-			return entry;
+			entry = entry.subpath(1, entry.getNameCount());
 		}
-		else
-		{
-			return new File(".", entry.getCanonicalPath());
-		}
+		return sanitizeNormalized(entry);
+	}
+
+	private Path sanitizeNormalized(Path entry)
+	throws IOException
+	{
+		return entry;
 	}
 
 	/**
@@ -86,7 +90,7 @@ public class Zip {
 		}
 		ZipEntry entry;
 		while ((entry = zip.getNextEntry()) != null) {
-			String entryName = sanitize(new File(entry.getName())).getPath();
+			String entryName = sanitize(new File(entry.getName()).toPath()).toFile().getPath();
 			if (re == null || re.matcher(entryName).matches()) {
 				list.add(entryName);
 			}
