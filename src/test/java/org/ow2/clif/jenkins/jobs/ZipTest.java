@@ -23,6 +23,9 @@ package org.ow2.clif.jenkins.jobs;
 import java.io.File;
 import org.apache.tools.ant.types.ZipScanner;
 import org.junit.Test;
+
+import jline.internal.TestAccessible;
+
 import static org.fest.assertions.Assertions.assertThat;
 
 public class ZipTest {
@@ -95,5 +98,12 @@ public class ZipTest {
 
 		String[] files = zip.getIncludedFiles();
 		assertThat(files).contains("examples/dummy.ctp");
+	}
+
+	@Test
+	public void maliciousPathIsSanitized() throws Exception
+	{
+		zip = new Zip("src/test/resources/zips/ProofOfConceptSEC2413.zip");
+		assertThat(zip.entries(null)).containsExactly("UnexpectedDir/UnexpectedFile.txt");
 	}
 }
