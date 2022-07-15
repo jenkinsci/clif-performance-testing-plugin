@@ -77,7 +77,8 @@ public class ZipTest {
 			.containsExactly(
 				new File(new File("samples", "http"), "brute.ctp").toString(),
 				new File("samples", "post.ctp").toString());
-		assertThat(zip.entries("([^/]*)/([^/]*)\\.ctp"))
+		assertThat(
+			zip.entries("([^" + File.separator + "]*)" + File.separator + "([^" + File.separator + "]*)\\.ctp"))
 			.containsExactly(new File("samples", "post.ctp").toString());
 	}
 

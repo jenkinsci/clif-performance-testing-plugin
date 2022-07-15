@@ -68,7 +68,7 @@ public class Zip {
 	 * @return a sanitized version of the given path
 	 * @throws IOException
 	 */
-	public Path sanitize(Path entry)
+	public Path sanitize(@Nonnull Path entry)
 	throws IOException
 	{
 		entry = entry.normalize();
