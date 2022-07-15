@@ -1,7 +1,7 @@
 /*
  * CLIF is a Load Injection Framework
  * Copyright (C) 2012 France Telecom R&D
- * Copyright (C) 2016 Orange SA
+ * Copyright (C) 2016, 2021, 2022 Orange SA
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,10 @@
 package org.ow2.clif.jenkins.jobs;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -56,6 +59,43 @@ public class Zip {
 	}
 
 	/**
+	 * Protection against malicious zip entries that could contain
+	 * .. path elements or possibly an absolute path. An absolute path
+	 * is turned relative by discarding the root element. Then the path
+	 * is normalized (discard . and resolve .. path elements). Finally,
+	 * all occurrences of .. path elements are merely discarded.
+	 * @param entry a path
+	 * @return a sanitized version of the given path
+	 * @throws IOException
+	 */
+	public Path sanitize(@Nonnull Path entry)
+	throws IOException
+	{
+		entry = entry.normalize();
+		if (entry.isAbsolute())
+		{
+			entry = entry.subpath(1, entry.getNameCount());
+		}
+		return sanitizeNormalized(entry);
+	}
+
+	private Path sanitizeNormalized(@Nonnull Path entry)
+	throws IOException
+	{
+		Iterator<Path> paths = entry.iterator();
+		Path result = null;
+		while (paths.hasNext())
+		{
+			Path pathElement = paths.next();
+			if (! pathElement.toString().equals(".."))
+			{
+				result = (result == null) ? pathElement : result.resolve(pathElement);
+			}
+		}
+		return result;
+	}
+
+	/**
 	 * returns entry names of zip, matching given pattern if provided
 	 *
 	 * @param pattern a Java regular expression as a string
@@ -72,7 +112,7 @@ public class Zip {
 		}
 		ZipEntry entry;
 		while ((entry = zip.getNextEntry()) != null) {
-			String entryName = entry.getName();
+			String entryName = sanitize(new File(entry.getName()).toPath()).toFile().getPath();
 			if (re == null || re.matcher(entryName).matches()) {
 				list.add(entryName);
 			}

@@ -21,8 +21,13 @@
 package org.ow2.clif.jenkins.jobs;
 
 import java.io.File;
+import java.util.List;
+
 import org.apache.tools.ant.types.ZipScanner;
 import org.junit.Test;
+
+import jline.internal.TestAccessible;
+
 import static org.fest.assertions.Assertions.assertThat;
 
 public class ZipTest {
@@ -57,7 +62,11 @@ public class ZipTest {
 	public void namesAreRelativePathFromZip() throws Exception {
 		zip = new Zip("src/test/resources/zips/nested.zip");
 		assertThat(zip.entries("(.*)\\.coffee$"))
-				.containsExactly("samples/http/brute.coffee");
+			.containsExactly(
+				new File(
+					new File("samples", "http"),
+					"brute.coffee")
+					.toString());
 	}
 
 	@Test
@@ -65,9 +74,12 @@ public class ZipTest {
 			throws Exception {
 		zip = new Zip("src/test/resources/zips/nested.zip");
 		assertThat(zip.entries("(.*)\\.ctp"))
-				.containsExactly("samples/http/brute.ctp", "samples/post.ctp");
-		assertThat(zip.entries("([^/]*)/([^/]*)\\.ctp"))
-				.containsExactly("samples/post.ctp");
+			.containsExactly(
+				new File(new File("samples", "http"), "brute.ctp").toString(),
+				new File("samples", "post.ctp").toString());
+		assertThat(
+			zip.entries("([^\\" + File.separatorChar + "]*)\\" + File.separatorChar + "([^\\" + File.separatorChar + "]*)\\.ctp"))
+			.containsExactly(new File("samples", "post.ctp").toString());
 	}
 
 	@Test
@@ -95,5 +107,17 @@ public class ZipTest {
 
 		String[] files = zip.getIncludedFiles();
 		assertThat(files).contains("examples/dummy.ctp");
+	}
+
+	@Test
+	public void maliciousPathIsSanitized() throws Exception
+	{
+		zip = new Zip("src/test/resources/zips/ProofOfConceptSEC2413.zip");
+		assertThat(zip.entries(null))
+			.containsExactly(
+				new File(
+					"UnexpectedDir",
+					"UnexpectedFile.txt")
+					.toString());
 	}
 }
