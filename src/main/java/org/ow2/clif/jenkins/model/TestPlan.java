@@ -30,7 +30,7 @@ import java.util.Set;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Util;
 
 public class TestPlan {
@@ -49,7 +49,7 @@ public class TestPlan {
 		super();
 	}
 
-	public TestPlan(String name, @Nonnull Date date) {
+	public TestPlan(String name, @NonNull Date date) {
 		this();
 		this.name = name;
 		this.date = new Date(date.getTime());
@@ -81,7 +81,7 @@ public class TestPlan {
 		return new Date(date.getTime());
 	}
 
-	public void setDate(@Nonnull Date date) {
+	public void setDate(@NonNull Date date) {
 		this.date = new Date(date.getTime());
 	}
 

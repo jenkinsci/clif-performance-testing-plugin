@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import org.apache.commons.lang.StringUtils;
 import org.ow2.clif.storage.lib.filestorage.FileStorageCommons;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -79,7 +79,7 @@ public class ClifBuilder extends Builder
 	/**
 	 * TestPlan file (ctp) to run
 	 */
-	@Nonnull
+	@NonNull
 	private final String testPlanFile;
 
 	private CommandInterpreter delegate = null;
@@ -87,9 +87,9 @@ public class ClifBuilder extends Builder
 
 	@DataBoundConstructor
 	public ClifBuilder(
-		@Nonnull String clifName,
+		@NonNull String clifName,
 		String clifOpts,
-		@Nonnull String testPlanFile,
+		@NonNull String testPlanFile,
 		String reportDir)
 	{
 		this.clifName = clifName;
@@ -98,7 +98,7 @@ public class ClifBuilder extends Builder
 		this.reportDir = reportDir == null ? FileStorageCommons.REPORT_DIR_DEFAULT : reportDir.trim();
 	}
 
-	@Nonnull
+	@NonNull
 	public String getTestPlanFile() {
 		return testPlanFile;
 	}
