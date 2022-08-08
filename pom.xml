@@ -12,7 +12,7 @@
 
 	<description>
 	This plug-in enables to run CLIF test plans from Jenkins and get detailed performance test reports,
-	including response time statistics, graphs, and performance trends (see http://clif.ow2.org).
+	including response time statistics, graphs, and performance trends (see https://clif.ow2.io).
 	Note: at least one CLIF server runtime to be installed along with this plug-in. 
 	</description>
 
@@ -186,9 +186,6 @@
 	<developers>
 		<developer>
 			<name>Vincent ROSSIGNOL</name>
-			<email>vincent1.rossignol (at) orange.com</email>
-			<organization>Orange Applications for Business</organization>
-			<organizationUrl>http://www.orange-business.com/fr/applications-for-business</organizationUrl>
 			<roles>
 				<role>mavenization</role>
 			</roles>
@@ -198,8 +195,7 @@
 			<id>dillense</id>
 			<name>Bruno DILLENSEGER</name>
 			<email>clif@ow2.org</email>
-			<organization>Orange Labs</organization>
-			<organizationUrl>http://www.orange.com/en/Innovation/Our-teams</organizationUrl>
+			<organization>Orange SA</organization>
 			<roles>
 				<role>CLIF project leader</role>
 				<role>developer</role>
@@ -208,10 +204,10 @@
 			<timezone>Europe/Paris</timezone>
 		</developer>
 		<developer>
+			<id>jcoste-orange</id>
 			<name>Julien COSTE</name>
 			<email>julien.coste (at) orange.com</email>
-			<organization>Orange Applications for Business</organization>
-			<organizationUrl>http://www.orange-business.com/fr/applications-for-business</organizationUrl>
+			<organization>Orange Business Services</organization>
 			<roles>
 				<role>Jenkins expert</role>
 				<role>developer</role>
@@ -219,6 +215,7 @@
 			<timezone>Europe/Paris</timezone>
 		</developer>
 		<developer>
+			<id>thenrio</id>
 			<name>Thierry HENRIO</name>
 			<roles>
 				<role>developer</role>
