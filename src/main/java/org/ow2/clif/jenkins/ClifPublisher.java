@@ -367,7 +367,7 @@ public class ClifPublisher
 	protected static double getDouble(String value) {
 		if (StringUtils.isNotBlank(value)) {
 			try {
-				return Double.valueOf(value);
+				return Double.parseDouble(value);
 			}
 			catch (NumberFormatException e) {
 				return -1;

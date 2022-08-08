@@ -23,8 +23,8 @@ package org.ow2.clif.jenkins;
 
 import java.io.File;
 import java.nio.file.Files;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.CheckForNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.QueryParameter;
 import hudson.Extension;
@@ -138,7 +138,7 @@ public class ClifPlugin extends GlobalConfiguration {
 	 *
 	 * @return A file object representing the configured Clif root parameter
 	 */
-	@Nonnull
+	@NonNull
 	public File dir()
 	{
 		File rootFile = new File(clifRootDir);
