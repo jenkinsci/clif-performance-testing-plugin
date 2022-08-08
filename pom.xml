@@ -16,7 +16,7 @@
 	Note: at least one CLIF server runtime to be installed along with this plug-in. 
 	</description>
 
-	<url>https://github.com/jenkinsci/clif-performance-testing</url>
+	<url>https://github.com/jenkinsci/clif-performance-testing-plugin</url>
 
 	<properties>
 		<changelist>999999-SNAPSHOT</changelist>
