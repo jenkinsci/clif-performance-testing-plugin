@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>3.55</version>
+		<version>4.42</version>
 	</parent>
 	<artifactId>clif-performance-testing</artifactId>
 	<version>${changelist}</version>
@@ -20,11 +20,7 @@
 
 	<properties>
 		<changelist>999999-SNAPSHOT</changelist>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<jenkins.version>2.138</jenkins.version>
-		<java.level>8</java.level>
-		<slf4jVersion>1.7.26</slf4jVersion>
+		<jenkins.version>2.277.4</jenkins.version>
 	</properties>
 
 	<repositories>
@@ -54,40 +50,44 @@
 	</pluginRepositories>
 	<dependencies>
 		<dependency>
-			<groupId>xml-apis</groupId>
-			<artifactId>xml-apis</artifactId>
-			<version>1.4.01</version>
-		</dependency>
-  		<dependency>
-    		<groupId>org.eclipse.jetty</groupId>
-    		<artifactId>jetty-server</artifactId>
-    		<version>9.4.25.v20191220</version>
-    		<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-util</artifactId>
-			<version>9.4.25.v20191220</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.1</version>
-		</dependency>	
-		<dependency>
 			<groupId>org.ow2.clif</groupId>
 			<artifactId>clif-api</artifactId>
 			<version>3.0.1</version>
+		 <exclusions>
+		  <exclusion>
+		   <groupId>org.mortbay.jetty</groupId>
+		   <artifactId>jetty</artifactId>
+		  </exclusion>
+		  <exclusion>
+		   <groupId>org.eclipse.jetty</groupId>
+		   <artifactId>jetty-continuation</artifactId>
+		  </exclusion>
+		  <exclusion>
+		   <groupId>org.eclipse.jetty</groupId>
+		   <artifactId>jetty-io</artifactId>
+		  </exclusion>
+		  <exclusion>
+		   <groupId>org.eclipse.jetty</groupId>
+		   <artifactId>jetty-util</artifactId>
+		  </exclusion>
+		  <exclusion>
+		   <groupId>org.springframework</groupId>
+		   <artifactId>spring-jms</artifactId>
+		  </exclusion>
+		  <exclusion>
+		   <groupId>org.springframework</groupId>
+		   <artifactId>spring-tx</artifactId>
+		  </exclusion>
+		  <exclusion>
+		   <groupId>org.apache.geronimo.specs</groupId>
+		   <artifactId>geronimo-servlet_2.5_spec</artifactId>
+		  </exclusion>
+		 </exclusions>
 		</dependency>
 		<dependency>
 			<groupId>commons-math</groupId>
 			<artifactId>commons-math</artifactId>
 			<version>1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>1.12</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
@@ -104,24 +104,12 @@
 		<dependency>
     		<groupId>org.jenkins-ci</groupId>
     		<artifactId>symbol-annotation</artifactId>
-		    <version>1.12</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>3.0.6.RELEASE</version>
+		    <version>1.12</version> <!-- TODO pick up from core BOM -->
 		</dependency>
 	</dependencies>
 	<build>
 		<pluginManagement>
 			<plugins>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>findbugs-maven-plugin</artifactId>
-					<configuration>
-						<skip>false</skip>
-   					</configuration>
-				</plugin>
 				<!--This plugin's configuration is used to store Eclipse m2e settings only.
 						It has no influence on the Maven build itself.-->
 				<plugin>
@@ -189,15 +177,6 @@
 								</pluginExecution>
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.2</version>
-					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
 					</configuration>
 				</plugin>
 			</plugins>

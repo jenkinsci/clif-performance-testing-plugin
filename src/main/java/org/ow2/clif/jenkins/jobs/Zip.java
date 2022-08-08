@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import org.apache.commons.io.FileUtils;
 import org.ow2.clif.jenkins.Messages;
 import com.google.common.collect.Lists;
@@ -42,11 +42,11 @@ public class Zip {
 	private static final Logger logger = Logger.getLogger(Zip.class.getName());
 	private final File file;
 
-	public Zip(@Nonnull File file) {
+	public Zip(@NonNull File file) {
 		this.file = file;
 	}
 
-	public Zip(@Nonnull String file) {
+	public Zip(@NonNull String file) {
 		this(new File(file));
 	}
 
@@ -68,7 +68,7 @@ public class Zip {
 	 * @return a sanitized version of the given path
 	 * @throws IOException
 	 */
-	public Path sanitize(@Nonnull Path entry)
+	public Path sanitize(@NonNull Path entry)
 	throws IOException
 	{
 		entry = entry.normalize();
@@ -79,7 +79,7 @@ public class Zip {
 		return sanitizeNormalized(entry);
 	}
 
-	private Path sanitizeNormalized(@Nonnull Path entry)
+	private Path sanitizeNormalized(@NonNull Path entry)
 	throws IOException
 	{
 		Iterator<Path> paths = entry.iterator();

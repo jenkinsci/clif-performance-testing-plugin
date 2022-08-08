@@ -23,7 +23,7 @@ package org.ow2.clif.jenkins.jobs;
 
 import java.io.File;
 import java.io.IOException;
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import org.ow2.clif.jenkins.ClifBuilder;
 import org.ow2.clif.jenkins.ClifInstallation;
 import org.ow2.clif.jenkins.ClifJobProperty;
@@ -34,7 +34,7 @@ public class Configurer {
 	Installations installations = new Installations();
 	private String version;
 
-	public FreeStyleProject	configure(FreeStyleProject job, File dir, @Nonnull String plan)
+	public FreeStyleProject	configure(FreeStyleProject job, File dir, @NonNull String plan)
 	throws IOException
 	{
 		String directory = dir.getPath();
@@ -53,7 +53,7 @@ public class Configurer {
 		return new ClifPublisher("report");
 	}
 
-	@Nonnull
+	@NonNull
 	ClifBuilder newClifBuilder(String plan) {
 		String clifName = version == null
 				? installations.firstName(ClifInstallation.DescriptorImpl.class)
