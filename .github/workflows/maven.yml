@@ -8,17 +8,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
+    - name: Check out
+      uses: actions/checkout@v3
       with:
-        java-version: 1.8
+        fetch-depth: 0
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version: 11
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
     - name: Copy plug-in
       run: |
         mkdir artifact
         mv target/clif-performance-testing.hpi artifact/
+
     - name: Make plug-in available for download
       uses: actions/upload-artifact@v2
       with:
