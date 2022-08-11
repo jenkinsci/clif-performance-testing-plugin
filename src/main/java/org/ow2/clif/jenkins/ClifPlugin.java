@@ -22,9 +22,8 @@
 package org.ow2.clif.jenkins;
 
 import java.io.File;
-import java.nio.file.Files;
-import edu.umd.cs.findbugs.annotations.CheckForNull;
-import edu.umd.cs.findbugs.annotations.NonNull;
+import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.QueryParameter;
 import hudson.Extension;
@@ -138,13 +137,13 @@ public class ClifPlugin extends GlobalConfiguration {
 	 *
 	 * @return A file object representing the configured Clif root parameter
 	 */
-	@NonNull
+	@Nonnull
 	public File dir()
 	{
 		File rootFile = new File(clifRootDir);
 		if (! rootFile.isAbsolute())
 		{
-			rootFile = new File(Jenkins.getInstance().root.getPath() + File.separator + clifRootDir);
+			rootFile = new File(Jenkins.get().root.getPath() + File.separator + clifRootDir);
 		}
 		return rootFile;
 	}
@@ -165,7 +164,7 @@ public class ClifPlugin extends GlobalConfiguration {
 		if (! candidateFile.isAbsolute())
 		{
 			candidateFile = new File(
-				Jenkins.getInstance().root.getPath()
+				Jenkins.get().root.getPath()
 				+ File.separator
 				+ value);
 		}

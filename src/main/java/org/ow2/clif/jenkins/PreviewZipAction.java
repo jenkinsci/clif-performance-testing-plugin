@@ -27,7 +27,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import edu.umd.cs.findbugs.annotations.NonNull;
+import javax.annotation.Nonnull;
 import org.apache.commons.collections.CollectionUtils;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
@@ -182,7 +182,7 @@ public class PreviewZipAction {
 		return this;
 	}
 
-	FreeStyleProject create(@NonNull String plan)
+	FreeStyleProject create(@Nonnull String plan)
 			throws IOException, InterruptedException {
 		FreeStyleProject project = newProject(plan);
 		jenkins().putItem(project);
@@ -205,7 +205,7 @@ public class PreviewZipAction {
 		return jenkins;
 	}
 
-	FreeStyleProject newProject(@NonNull String plan)
+	FreeStyleProject newProject(@Nonnull String plan)
 			throws IOException, InterruptedException {
 		FreeStyleProject project = Jobs.newJob(jenkins, Jobs.toJob(plan));
 		return clif.configure(project, dir, plan);
