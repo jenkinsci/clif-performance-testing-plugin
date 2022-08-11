@@ -23,15 +23,11 @@ package org.ow2.clif.jenkins;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import edu.umd.cs.findbugs.annotations.NonNull;
+import javax.annotation.Nonnull;
 import org.apache.commons.lang.StringUtils;
 import org.ow2.clif.storage.lib.filestorage.FileStorageCommons;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.StaplerRequest;
 import hudson.tasks.BatchFile;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Builder;
@@ -40,9 +36,7 @@ import hudson.tasks.Shell;
 import hudson.tools.ToolInstallation;
 import hudson.util.ArgumentListBuilder;
 import hudson.util.FormValidation;
-import hudson.util.VariableResolver;
 import hudson.CopyOnWrite;
-import hudson.EnvVars;
 import hudson.Extension;
 import hudson.Functions;
 import hudson.Launcher;
@@ -50,7 +44,6 @@ import hudson.Util;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
-import net.sf.json.JSONObject;
 
 /**
  * Clif task builder, based on CommandInterpreter, and finally on
@@ -79,7 +72,7 @@ public class ClifBuilder extends Builder
 	/**
 	 * TestPlan file (ctp) to run
 	 */
-	@NonNull
+	@Nonnull
 	private final String testPlanFile;
 
 	private CommandInterpreter delegate = null;
@@ -87,9 +80,9 @@ public class ClifBuilder extends Builder
 
 	@DataBoundConstructor
 	public ClifBuilder(
-		@NonNull String clifName,
+		@Nonnull String clifName,
 		String clifOpts,
-		@NonNull String testPlanFile,
+		@Nonnull String testPlanFile,
 		String reportDir)
 	{
 		this.clifName = clifName;
@@ -98,7 +91,7 @@ public class ClifBuilder extends Builder
 		this.reportDir = reportDir == null ? FileStorageCommons.REPORT_DIR_DEFAULT : reportDir.trim();
 	}
 
-	@NonNull
+	@Nonnull
 	public String getTestPlanFile() {
 		return testPlanFile;
 	}

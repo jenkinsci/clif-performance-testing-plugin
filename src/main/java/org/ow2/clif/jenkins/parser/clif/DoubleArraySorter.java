@@ -25,7 +25,7 @@ package org.ow2.clif.jenkins.parser.clif;
  * sorting and searching).  This class also contains a static factory
  * that allows arrays to be viewed as lists.
  * <br>
- * All methods in this class throw a <tt>NullPointerException</tt> if
+ * All methods in this class throw a <code>NullPointerException</code> if
  * the specified array reference is null, except where noted.
  * <br>
  * The documentation for the methods contained in this class includes
@@ -33,7 +33,7 @@ package org.ow2.clif.jenkins.parser.clif;
  * be regarded as <i>implementation notes</i>, rather than parts of the
  * <i>specification</i>.  Implementors should feel free to substitute other
  * algorithms, so long as the specification itself is adhered to.  (For
- * example, the algorithm used by <tt>sort(Object[])</tt> does not have to be
+ * example, the algorithm used by <code>sort(Object[])</code> does not have to be
  * a mergesort, but it does have to be <i>stable</i>.)
  * <br>
  * This class is a member of the
@@ -93,8 +93,8 @@ public class DoubleArraySorter {
 	 * Only the first array is used to sort. The second array is sorted using
 	 * the same order as the first one
 	 * The range to be sorted extends from index
-	 * <tt>fromIndex</tt>, inclusive, to index <tt>toIndex</tt>, exclusive.
-	 * (If <tt>fromIndex==toIndex</tt>, the range to be sorted is empty.)
+	 * <code>fromIndex</code>, inclusive, to index <code>toIndex</code>, exclusive.
+	 * (If <code>fromIndex==toIndex</code>, the range to be sorted is empty.)
 	 * <br>
 	 * The <code>&lt;</code> relation does not provide a total order on
 	 * all floating-point values; although they are distinct numbers
@@ -121,9 +121,9 @@ public class DoubleArraySorter {
 	 * @param fromIndex the index of the first element (inclusive) to be
 	 *                  sorted
 	 * @param toIndex   the index of the last element (exclusive) to be sorted
-	 * @throws IllegalArgumentException       if <tt>fromIndex &gt; toIndex</tt>
-	 * @throws ArrayIndexOutOfBoundsException if <tt>fromIndex &lt; 0</tt> or
-	 *                                        <tt>toIndex &gt; a.length</tt>
+	 * @throws IllegalArgumentException       if <code>fromIndex &gt; toIndex</code>
+	 * @throws ArrayIndexOutOfBoundsException if <code>fromIndex &lt; 0</code> or
+	 *                                        <code>toIndex &gt; a.length</code>
 	 */
 	public static void sort(double[] first, double[] second, int fromIndex, int toIndex) {
 		rangeCheck(first.length, fromIndex, toIndex);

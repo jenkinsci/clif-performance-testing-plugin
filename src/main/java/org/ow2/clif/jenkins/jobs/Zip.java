@@ -25,13 +25,12 @@ import java.io.*;
 import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import edu.umd.cs.findbugs.annotations.NonNull;
+import javax.annotation.Nonnull;
 import org.apache.commons.io.FileUtils;
 import org.ow2.clif.jenkins.Messages;
 import com.google.common.collect.Lists;
@@ -42,11 +41,11 @@ public class Zip {
 	private static final Logger logger = Logger.getLogger(Zip.class.getName());
 	private final File file;
 
-	public Zip(@NonNull File file) {
+	public Zip(@Nonnull File file) {
 		this.file = file;
 	}
 
-	public Zip(@NonNull String file) {
+	public Zip(@Nonnull String file) {
 		this(new File(file));
 	}
 
@@ -66,10 +65,8 @@ public class Zip {
 	 * all occurrences of .. path elements are merely discarded.
 	 * @param entry a path
 	 * @return a sanitized version of the given path
-	 * @throws IOException
 	 */
-	public Path sanitize(@NonNull Path entry)
-	throws IOException
+	public Path sanitize(@Nonnull Path entry)
 	{
 		entry = entry.normalize();
 		if (entry.isAbsolute())
@@ -79,8 +76,7 @@ public class Zip {
 		return sanitizeNormalized(entry);
 	}
 
-	private Path sanitizeNormalized(@NonNull Path entry)
-	throws IOException
+	private Path sanitizeNormalized(@Nonnull Path entry)
 	{
 		Iterator<Path> paths = entry.iterator();
 		Path result = null;

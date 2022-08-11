@@ -23,7 +23,7 @@ package org.ow2.clif.jenkins.jobs;
 
 import org.ow2.clif.jenkins.Messages;
 import java.io.File;
-import edu.umd.cs.findbugs.annotations.NonNull;
+import javax.annotation.Nonnull;
 import org.ow2.clif.jenkins.ClifPlugin;
 import jenkins.model.GlobalConfiguration;
 
@@ -40,7 +40,7 @@ public abstract class Workspaces
 	 * @return the currently configured root directory for imported
 	 * CLIF test projects' workspaces
 	 */
-	@NonNull
+	@Nonnull
 	public static File dir()
 	throws RuntimeException
 	{
