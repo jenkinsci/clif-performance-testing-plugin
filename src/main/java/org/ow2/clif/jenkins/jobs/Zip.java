@@ -138,7 +138,7 @@ public class Zip {
 		{
 			String name = sanitize(new File(entry.getName()).toPath()).toFile().getPath();
 			if (entry.isDirectory()) {
-				return chop(name);
+				return name;
 			}
 			int i = name.indexOf('/');
 			if (i != -1) {
