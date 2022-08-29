@@ -136,8 +136,7 @@ public class Zip {
 		ZipEntry entry = zip.getNextEntry();
 		if (entry != null)
 		{
-			String name = entry.getName();
-
+			String name = sanitize(new File(entry.getName()).toPath()).toFile().getPath();
 			if (entry.isDirectory()) {
 				return chop(name);
 			}
@@ -172,7 +171,7 @@ public class Zip {
 		ZipInputStream zip = newStream();
 		try {
 			for (zipentry = zip.getNextEntry(); zipentry != null; zipentry = zip.getNextEntry()) {
-				String entryName = zipentry.getName();
+				String entryName = sanitize(new File(zipentry.getName()).toPath()).toFile().getPath();
 
 				File dest = new File(dir, entryName);
 				if (zipentry.isDirectory())
