@@ -1,6 +1,7 @@
 /*
  * CLIF is a Load Injection Framework
  * Copyright (C) 2012 France Telecom R&D
+ * Copyright (C) 2022 Orange SA
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,17 +22,26 @@
 package org.ow2.clif.jenkins.jobs;
 
 import java.io.File;
-import java.util.List;
-
+import java.nio.file.Files;
+import java.nio.file.attribute.PosixFilePermissions;
 import org.apache.tools.ant.types.ZipScanner;
 import org.junit.Test;
-
-import jline.internal.TestAccessible;
-
 import static org.fest.assertions.Assertions.assertThat;
 
 public class ZipTest {
 	private Zip zip;
+
+	static private void deleteFileOnExit(File fileOrDir)
+	{
+		if (fileOrDir.isDirectory())
+		{
+			for (File f : fileOrDir.listFiles())
+			{
+				deleteFileOnExit(f);
+			}
+		}
+		fileOrDir.deleteOnExit();
+	}
 
 	@Test
 	public void namesAreZipEntriesFileName() throws Exception {
@@ -119,5 +129,26 @@ public class ZipTest {
 					"UnexpectedDir",
 					"UnexpectedFile.txt")
 					.toString());
+	}
+
+	@Test
+	public void maliciousPathIsSanitizedOnExtract() throws Exception
+	{
+		zip = new Zip("src/test/resources/zips/ProofOfConceptSEC2413.zip");
+		File tmpDir = Files.createTempDirectory(
+			"CLIF-test-maliciousPathIsSanitizedOnExtract",
+			PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rwx------")))
+			.toFile();
+		zip.extractTo(tmpDir);
+		deleteFileOnExit(tmpDir);
+		assertThat(tmpDir.list()).containsOnly("UnexpectedDir");
+		assertThat(new File(tmpDir, "UnexpectedDir").list()).containsOnly("UnexpectedFile.txt");
+	}
+
+	@Test
+	public void maliciousPathIsSanitizedOnBasedir() throws Exception
+	{
+		zip = new Zip("src/test/resources/zips/ProofOfConceptSEC2413.zip");
+		assertThat(zip.basedir()).isEqualTo("UnexpectedDir");
 	}
 }
