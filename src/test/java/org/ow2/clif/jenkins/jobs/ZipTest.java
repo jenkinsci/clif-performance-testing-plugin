@@ -136,8 +136,7 @@ public class ZipTest {
 	{
 		zip = new Zip("src/test/resources/zips/ProofOfConceptSEC2413.zip");
 		File tmpDir = Files.createTempDirectory(
-			"CLIF-test-maliciousPathIsSanitizedOnExtract",
-			PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rwx------")))
+			"CLIF-test-maliciousPathIsSanitizedOnExtract")
 			.toFile();
 		zip.extractTo(tmpDir);
 		deleteFileOnExit(tmpDir);
