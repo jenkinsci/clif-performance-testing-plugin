@@ -35,7 +35,6 @@ import org.apache.commons.io.FileUtils;
 import org.ow2.clif.jenkins.Messages;
 import com.google.common.collect.Lists;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import static org.apache.commons.lang.StringUtils.chop;
 
 public class Zip {
 	private static final Logger logger = Logger.getLogger(Zip.class.getName());
@@ -140,7 +139,7 @@ public class Zip {
 			if (entry.isDirectory()) {
 				return name;
 			}
-			int i = name.indexOf('/');
+			int i = name.indexOf(File.separator);
 			if (i != -1) {
 				return name.substring(0, i);
 			}
