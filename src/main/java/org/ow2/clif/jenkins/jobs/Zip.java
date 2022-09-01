@@ -35,7 +35,6 @@ import org.apache.commons.io.FileUtils;
 import org.ow2.clif.jenkins.Messages;
 import com.google.common.collect.Lists;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import static org.apache.commons.lang.StringUtils.chop;
 
 public class Zip {
 	private static final Logger logger = Logger.getLogger(Zip.class.getName());
@@ -136,12 +135,11 @@ public class Zip {
 		ZipEntry entry = zip.getNextEntry();
 		if (entry != null)
 		{
-			String name = entry.getName();
-
+			String name = sanitize(new File(entry.getName()).toPath()).toFile().getPath();
 			if (entry.isDirectory()) {
-				return chop(name);
+				return name;
 			}
-			int i = name.indexOf('/');
+			int i = name.indexOf(File.separator);
 			if (i != -1) {
 				return name.substring(0, i);
 			}
@@ -172,7 +170,7 @@ public class Zip {
 		ZipInputStream zip = newStream();
 		try {
 			for (zipentry = zip.getNextEntry(); zipentry != null; zipentry = zip.getNextEntry()) {
-				String entryName = zipentry.getName();
+				String entryName = sanitize(new File(zipentry.getName()).toPath()).toFile().getPath();
 
 				File dest = new File(dir, entryName);
 				if (zipentry.isDirectory())
