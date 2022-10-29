@@ -26,7 +26,8 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class FileSystemTest {
 	private String path;
@@ -67,8 +68,8 @@ public class FileSystemTest {
 
 		fs.rm_rf("**/synchro*");
 
-		assertThat(f).doesNotExist();
-		assertThat(monster).doesNotExist();
-		assertThat(elvis).exists();
+		assertFalse(f.exists());
+		assertFalse(monster.exists());
+		assertTrue(elvis.exists());
 	}
 }

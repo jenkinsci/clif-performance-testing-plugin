@@ -22,7 +22,9 @@ package org.ow2.clif.jenkins.jobs;
 
 import org.junit.Before;
 import org.junit.Test;
-import static org.fest.assertions.Assertions.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anEmptyMap;
+import static org.hamcrest.Matchers.equalTo;
 
 public class ParameterParserTest {
 	private ParameterParser parser;
@@ -37,14 +39,11 @@ public class ParameterParserTest {
 		// convention like this one for parameter name
 		// http://guides.rubyonrails.org/action_controller_overview.html#hash-and-array-parameters
 		assertThat(
-				parser.parse("examples/synchro.ctp[uninstall]").get("examples/synchro.ctp")
-		).isEqualTo("uninstall");
+				parser.parse("examples/synchro.ctp[uninstall]").get("examples/synchro.ctp"), equalTo("uninstall"));
 	}
 
 	@Test
 	public void isSilentOtherwise() throws Exception {
-		assertThat(
-				parser.parse("json")
-		).isEmpty();
+		assertThat(parser.parse("json"), anEmptyMap());
 	}
 }

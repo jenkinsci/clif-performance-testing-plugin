@@ -26,7 +26,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class ZipExtractTest {
 	private Zip zip;
@@ -49,7 +49,7 @@ public class ZipExtractTest {
 	public void extractsToDirectoryDeflatesAllZip() throws Exception {
 		zip = new Zip("src/test/resources/zips/nested.zip");
 		zip.extractTo(path);
-		assertThat(new File(workspaces + "/samples")).isDirectory();
-		assertThat(new File(workspaces + "/samples/post.ctp")).isFile();
+		assertTrue(new File(workspaces + "/samples").isDirectory());
+		assertTrue(new File(workspaces + "/samples/post.ctp").isFile());
 	}
 }
