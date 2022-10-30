@@ -67,7 +67,7 @@ public class ConfigurerTest {
 	public void configurePrivateWorkspace() throws Exception {
 		FreeStyleProject project = j.createFreeStyleProject();
 		configurer.configure(project, dir, "examples/http.ctp");
-		assertEquals("target/workspaces/examples", project.getCustomWorkspace());
+		assertEquals("target" + File.separator + "workspaces" + File.separator + "examples", project.getCustomWorkspace());
 	}
 
 	@Test
