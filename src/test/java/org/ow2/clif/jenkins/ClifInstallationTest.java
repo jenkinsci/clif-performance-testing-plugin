@@ -30,7 +30,6 @@ import hudson.Util;
 import hudson.util.FormValidation;
 import static hudson.util.FormValidation.Kind.ERROR;
 import static hudson.util.FormValidation.Kind.OK;
-import static org.fest.assertions.Assertions.assertThat;
 
 
 /**
@@ -156,7 +155,7 @@ public class ClifInstallationTest extends HudsonTestCase
 		final String expectedMessage)
 	{
 		final FormValidation res = desc.doCheckInstallation(home, schedulerURL, schedulerCredentialsFile, null, null);
-		assertThat(res.getMessage()).isEqualTo(Util.escape(expectedMessage));
-		assertThat(res.kind).isEqualTo(expectedKind);
+		assertEquals(Util.escape(expectedMessage), res.getMessage());
+		assertEquals(expectedKind, res.kind);
 	}
 }
