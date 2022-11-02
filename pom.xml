@@ -61,6 +61,10 @@
 		   <artifactId>log4j</artifactId>
 		  </exclusion>
 		  <exclusion>
+		   <groupId>org.bouncycastle</groupId>
+		   <artifactId>bcprov-jdk15</artifactId>
+		  </exclusion>
+		  <exclusion>
 		   <groupId>org.mortbay.jetty</groupId>
 		   <artifactId>jetty</artifactId>
 		  </exclusion>
@@ -94,6 +98,12 @@
 			<groupId>commons-math</groupId>
 			<artifactId>commons-math</artifactId>
 			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jenkins-ci.modules</groupId>
+			<artifactId>instance-identity</artifactId>
+			<version>116.vf8f487400980</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
