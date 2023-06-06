@@ -49,7 +49,7 @@ public class ClifPluginTest extends HudsonTestCase {
 /* En commentaire tant que Clif-core embarque un Xalan 2.5.1
 
 			final HtmlForm form = webClient.goTo("configure").getFormByName("config");
-			form.getInputByName("clifRootDir").setValueAttribute(absolutePath);
+			form.getInputByName("clifRootDir").setValue(absolutePath);
 			submit(form);
 
 */
@@ -78,7 +78,7 @@ public class ClifPluginTest extends HudsonTestCase {
 /* En commentaire tant que Clif-core embarque un Xalan 2.5.1
 
 			final HtmlForm form = webClient.goTo("configure").getFormByName("config");
-			form.getInputByName("clifRootDir").setValueAttribute(relativePath);
+			form.getInputByName("clifRootDir").setValue(relativePath);
 			submit(form);
 
 */
