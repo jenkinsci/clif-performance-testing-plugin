@@ -20,25 +20,28 @@
  */
 package jenkins.model;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import hudson.model.FreeStyleProject;
 import hudson.model.Item;
 import hudson.model.ItemGroup;
-import static org.fest.assertions.Assertions.assertThat;
+import org.junit.Test;
 
 public class FakeTest {
 
 	@Test
 	public void canFakeAndResetGlobals() {
-		assertThat(Jenkins.getInstance()).isNull();
+		assertNull(Jenkins.getInstance());
 		Jenkins jenkins = Fake.install();
 
-		assertThat(jenkins).isNotNull();
-		assertThat(Jenkins.getInstance()).isEqualTo(jenkins);
+		assertNotNull(jenkins);
+		assertEquals(jenkins, Jenkins.getInstance());
 
 		Jenkins j = Fake.uninstall();
-		assertThat(j).isNull();
-		assertThat(Jenkins.getInstance()).isNull();
+		assertNull(j);
+		assertNull(Jenkins.getInstance());
 	}
 
 
@@ -49,7 +52,7 @@ public class FakeTest {
 					(ItemGroup<? extends Item>) jenkins.getItemGroup(),
 					"bar"
 			);
-			assertThat(project.getParent()).isEqualTo(jenkins);
+			assertEquals(jenkins, project.getParent());
 		}
 		finally {
 			Fake.uninstall();

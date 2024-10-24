@@ -26,7 +26,13 @@ import org.junit.Test;
 import org.ow2.clif.jenkins.chart.ChartConfiguration;
 import org.ow2.clif.jenkins.model.ClifReport;
 import org.ow2.clif.jenkins.model.TestPlan;
-import static org.fest.assertions.Assertions.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -55,14 +61,15 @@ public class ClifParserTest {
 		ClifReport report = parser.parse(System.out);
 
 		assertNotNull(report);
-		assertThat(report.getTestplans()).isNotEmpty().containsExactly(new TestPlan("random", new Date()));
+		assertThat(report.getTestplans(), not(empty()));
+		assertThat(report.getTestplans(), contains(new TestPlan("random", new Date())));
 
 		TestPlan testPlanRead = report.getTestplan("random");
-		assertThat(testPlanRead.getAggregatedMeasures()).hasSize(1);
-		assertThat(testPlanRead.getAlarms()).isNullOrEmpty();
-		assertThat(testPlanRead.getInjectors()).hasSize(1);
-		assertThat(testPlanRead.getProbes()).isNullOrEmpty();
-		assertThat(testPlanRead.getServers()).hasSize(1);
+		assertThat(testPlanRead.getAggregatedMeasures(), hasSize(1));
+		assertThat(testPlanRead.getAlarms(), anyOf(nullValue(),empty()));
+		assertThat(testPlanRead.getInjectors(), hasSize(1));
+		assertThat(testPlanRead.getProbes(), anyOf(nullValue(),empty()));
+		assertThat(testPlanRead.getServers(), hasSize(1));
 
 		start += System.currentTimeMillis();
 		System.out.println(start);

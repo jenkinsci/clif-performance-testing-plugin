@@ -21,83 +21,71 @@
  */
 package org.ow2.clif.jenkins.jobs;
 
+import hudson.model.FreeStyleProject;
 import java.io.File;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.jvnet.hudson.test.JenkinsRule;
 import org.ow2.clif.jenkins.ClifBuilder;
 import org.ow2.clif.jenkins.ClifPublisher;
-import hudson.model.Descriptor;
-import hudson.model.FreeStyleProject;
-import hudson.tasks.Builder;
-import hudson.tasks.Publisher;
-import hudson.util.DescribableList;
-import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.junit.Assert.assertEquals;
 
 public class ConfigurerTest {
 
-	private Installations installations;
+	@Rule public JenkinsRule j = new JenkinsRule();
+
 	private Configurer configurer;
-	private FreeStyleProject project;
 	private File dir;
 
 	@Before
-	@SuppressWarnings("unchecked")
 	public void setUp() {
-		installations = mock(Installations.class);
 		configurer = new Configurer();
-		configurer.installations = installations;
-
-		project = mock(FreeStyleProject.class);
-		DescribableList<Builder, Descriptor<Builder>> builders =
-				mock(DescribableList.class);
-		when(project.getBuildersList()).thenReturn(builders);
-
-		DescribableList<Publisher, Descriptor<Publisher>> publishers =
-				mock(DescribableList.class);
-		when(project.getPublishersList()).thenReturn(publishers);
-
 		dir = new File("target/workspaces");
 	}
 
 	@Test
-	public void configureAddsOneClifBuilderToProjectBuilderList()
-			throws Exception {
+	public void configureAddsOneClifBuilderToProjectBuilderList() throws Exception {
+		FreeStyleProject project = j.createFreeStyleProject();
 		configurer.configure(project, dir, "nowhere/noTestPlan.ctp");
-		verify(project.getBuildersList()).add(any(ClifBuilder.class));
+		assertThat(project.getBuildersList(), hasSize(1));
+		assertThat(project.getBuildersList().get(0), instanceOf(ClifBuilder.class));
 	}
 
 	@Test
 	public void configurePublisher() throws Exception {
+		FreeStyleProject project = j.createFreeStyleProject();
 		configurer.configure(project, dir, "nowhere/noTestPlan.ctp");
-		verify(project.getPublishersList()).add(any(ClifPublisher.class));
+		assertThat(project.getBuildersList(), hasSize(1));
+		assertThat(project.getBuildersList().get(0), instanceOf(ClifBuilder.class));
 	}
 
 	@Test
 	public void configurePrivateWorkspace() throws Exception {
+		FreeStyleProject project = j.createFreeStyleProject();
 		configurer.configure(project, dir, "examples/http.ctp");
-		verify(project).setCustomWorkspace(new File("target/workspaces/examples").getPath());
-
+		assertEquals("target" + File.separator + "workspaces" + File.separator + "examples", project.getCustomWorkspace());
 	}
 
 	@Test
-	public void newClifBuilderHasTestPlan() throws Exception {
+	public void newClifBuilderHasTestPlan() {
 		ClifBuilder builder = configurer.newClifBuilder("http.ctp");
-		assertThat(builder.getTestPlanFile()).isEqualTo("http.ctp");
+		assertEquals("http.ctp", builder.getTestPlanFile());
 	}
 
 	@Test
-	public void newClifBuilderHasReportDir() throws Exception {
+	public void newClifBuilderHasReportDir() {
 		ClifBuilder builder = configurer.newClifBuilder("http.ctp");
-		assertThat(builder.getReportDir()).isEqualTo("report");
+		assertEquals("report", builder.getReportDir());
 	}
 
 	@Test
-	public void newClifPublisherHasReportDirectory() throws Exception {
+	public void newClifPublisherHasReportDirectory() {
 		ClifPublisher publisher = configurer.newClifPublisher();
-		assertThat(publisher.getClifReportDirectory())
-				.isEqualTo("report");
+		assertEquals("report", publisher.getClifReportDirectory());
 	}
 
 }

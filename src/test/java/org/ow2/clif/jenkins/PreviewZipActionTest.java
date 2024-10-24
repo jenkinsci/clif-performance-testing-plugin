@@ -20,6 +20,8 @@
  */
 package org.ow2.clif.jenkins;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.After;
 import org.junit.Before;
@@ -33,9 +35,13 @@ import hudson.model.FreeStyleProject;
 import hudson.model.Item;
 import jenkins.model.Fake;
 import jenkins.model.Jenkins;
-import static com.google.common.collect.Lists.newArrayList;
-import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class PreviewZipActionTest {
 	private Jenkins jenkins;
@@ -64,7 +70,7 @@ public class PreviewZipActionTest {
 	}
 
 	List<Item> jobs(String... names) {
-		List<Item> jobs = newArrayList();
+		List<Item> jobs = new ArrayList<>();
 		for (String name : names) {
 			FreeStyleProject job = job(name);
 			jobs.add(job);
@@ -83,13 +89,13 @@ public class PreviewZipActionTest {
 
 	@Test
 	public void doesNotListNestedTestPlanInZip() throws Exception {
-		assertThat(preview.pattern).isEqualTo("([^/]*)/([^/]*)\\.ctp");
+		assertThat(preview.pattern, equalTo("([^/]*)/([^/]*)\\.ctp"));
 	}
 
 	@Test
 	public void jobNameIsDasherizedFileNameWithoutExtension() throws Exception {
 		FreeStyleProject project = preview.create("red/tomato.erl");
-		assertThat(project.getName()).isEqualTo("red-tomato");
+		assertThat(project.getName(), equalTo("red-tomato"));
 	}
 
 	@Test
@@ -115,22 +121,22 @@ public class PreviewZipActionTest {
 		preview.process(response);
 
 		verify(response).sendRedirect2("previews/123");
-		assertThat(parent.getPreviews(preview.id())).isEqualTo(preview);
+		assertThat(parent.getPreviews(preview.id()), equalTo(preview));
 	}
 
 	@Test
 	public void diffingZipAgainstJobs() throws Exception {
 		jobs("examples-dummy", "examples-synchro", "rebar");
 		when(zip.entries(anyString())).thenReturn(
-				newArrayList("examples/dummy.ctp", "examples/ftp.ctp")
+				Arrays.asList("examples/dummy.ctp", "examples/ftp.ctp")
 		);
 		when(zip.basedir()).thenReturn("examples");
 
 		preview.diff();
 
-		assertThat(preview.installs).containsOnly("examples/ftp.ctp");
-		assertThat(preview.uninstalls).containsOnly("examples/synchro.ctp");
-		assertThat(preview.upgrades).containsOnly("examples/dummy.ctp");
+		assertThat(preview.installs, contains("examples/ftp.ctp"));
+		assertThat(preview.uninstalls, contains("examples/synchro.ctp"));
+		assertThat(preview.upgrades, contains("examples/dummy.ctp"));
 	}
 
 }
