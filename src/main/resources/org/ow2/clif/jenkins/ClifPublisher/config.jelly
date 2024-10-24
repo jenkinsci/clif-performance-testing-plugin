@@ -5,7 +5,7 @@
 		<f:textbox name="clif.clifReportDirectory"
 		           value="${instance.clifReportDirectory}"
 		           default="report"
-		           checkUrl="'${rootURL}/publisher/ClifPublisher/checkClifReportDirectory?value='+escape(this.value)"/>
+		           checkUrl="${rootURL}/publisher/ClifPublisher/checkClifReportDirectory" checkDependsOn=""/>
 	</f:entry>
 	<f:advanced>
 		<f:entry title="${%Action Aliases}" help="${rootURL}/plugin/clif-performance-testing/help-projectConfig-alias.html">
@@ -62,12 +62,12 @@
 					<f:entry title="${%From}">
 						<f:textbox name="clif.minTimestamp"
 						           value="${instance.minTimestamp}"
-						           checkUrl="'${rootURL}/publisher/ClifPublisher/checkMinTimestamp?value='+escape(this.value)"/>
+						           checkUrl="${rootURL}/publisher/ClifPublisher/checkMinTimestamp" checkDependsOn=""/>
 					</f:entry>
 					<f:entry title="${%To}">
 						<f:textbox name="clif.maxTimestamp"
 						           value="${instance.maxTimestamp}"
-						           checkUrl="'${rootURL}/publisher/ClifPublisher/checkMaxTimestamp?value='+escape(this.value)"/>
+						           checkUrl="${rootURL}/publisher/ClifPublisher/checkMaxTimestamp" checkDependsOn=""/>
 					</f:entry>
 				</f:optionalBlock>
 			</table>
@@ -80,13 +80,13 @@
 						<f:textbox name="clif.datacleanup.keepFactor"
 						           value="${instance.dataCleanupConfig.keepFactor}"
 						           default="2"
-						           checkUrl="'${rootURL}/publisher/ClifPublisher/checkKeepFactor?value='+escape(this.value)"/>
+						           checkUrl="${rootURL}/publisher/ClifPublisher/checkKeepFactor" checkDependsOn=""/>
 					</f:entry>
 					<f:entry title="${%Keep percentage}">
 						<f:textbox name="clif.datacleanup.keepPercentage"
 						           value="${instance.dataCleanupConfig.keepPercentage}"
 						           default="95"
-						           checkUrl="'${rootURL}/publisher/ClifPublisher/checkKeepPercentage?value='+escape(this.value)"/>
+						           checkUrl="${rootURL}/publisher/ClifPublisher/checkKeepPercentage" checkDependsOn=""/>
 					</f:entry>
 				</f:optionalBlock>
 			</table>
@@ -97,30 +97,30 @@
 					<f:textbox name="clif.chartWidth"
 					           value="${instance.chartWidth}"
 					           default="1200"
-					           checkUrl="'${rootURL}/publisher/ClifPublisher/checkChartWidth?value='+escape(this.value)"/>
+					           checkUrl="${rootURL}/publisher/ClifPublisher/checkChartWidth" checkDependsOn=""/>
 				</f:entry>
 				<f:entry title="${%Chart height}">
 					<f:textbox name="clif.chartHeight"
 					           value="${instance.chartHeight}"
 					           default="600"
-					           checkUrl="'${rootURL}/publisher/ClifPublisher/checkChartHeight?value='+escape(this.value)"/>
+					           checkUrl="${rootURL}/publisher/ClifPublisher/checkChartHeight" checkDependsOn=""/>
 				</f:entry>
 				<f:entry title="${%Distribution chart slice size}">
 					<f:textbox name="clif.distributionSliceSize"
 					           value="${instance.distributionSliceSize}"
 					           default="50"
-					           checkUrl="'${rootURL}/publisher/ClifPublisher/checkDistributionSliceSize?value='+escape(this.value)"/>
+					           checkUrl="${rootURL}/publisher/ClifPublisher/checkDistributionSliceSize" checkDependsOn=""/>
 				</f:entry>
 				<f:entry title="${%Distribution chart slice number}">
 					<f:textbox name="clif.distributionSliceNumber"
 					           value="${instance.distributionSliceNumber}" default="15"
-					           checkUrl="'${rootURL}/publisher/ClifPublisher/checkDistributionSliceNumber?value='+escape(this.value)"/>
+					           checkUrl="${rootURL}/publisher/ClifPublisher/checkDistributionSliceNumber" checkDependsOn=""/>
 				</f:entry>
 				<f:entry title="${%Statistical period}">
 					<f:textbox name="clif.statisticalPeriod"
 					           value="${instance.statisticalPeriod}"
 					           default="5"
-					           checkUrl="'${rootURL}/publisher/ClifPublisher/checkStatisticalPeriod?value='+escape(this.value)"/>
+					           checkUrl="${rootURL}/publisher/ClifPublisher/checkStatisticalPeriod" checkDependsOn=""/>
 				</f:entry>
 			</table>
 		</f:entry>
