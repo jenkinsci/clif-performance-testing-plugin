@@ -106,10 +106,7 @@
 										<g:alarm testPlan="${testPlan}" level="FATAL"/>
 									</div>
 
-									<script type="text/javascript">
-										var tabView = new YAHOO.widget.TabView('alarms${testPlan.name}');
-										tabView.getTab(0).active = true;
-									</script>
+ 									<st:adjunct includes="yui-mapview-init"/>
 								</div>
 
 
