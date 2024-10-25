@@ -22,7 +22,7 @@
 	</j:if>
 	<f:entry title="${%TestPlan to run}">
 		<f:textbox name="testPlanFile" value="${instance.testPlanFile}"
-		           checkUrl="'${rootURL}/builder/ClifBuilder/checkTestPlanFile?value='+escape(this.value)"/>
+		           checkUrl="${rootURL}/builder/ClifBuilder/checkTestPlanFile" checkDependsOn=""/>
 	</f:entry>
 	<f:advanced>
 		<f:entry title="${%Java Options}" help="${rootURL}/plugin/clif-performance-testing/help-clif-opts.html">
@@ -30,7 +30,7 @@
 		</f:entry>
 		<f:entry title="${%Clif report directory}">
 			<f:textbox name="reportDir" value="${instance.reportDir}" default="report"
-			           checkUrl="'${rootURL}/builder/ClifBuilder/checkReportDir?value='+escape(this.value)"/>
+			           checkUrl="${rootURL}/builder/ClifBuilder/checkReportDir" checkDependsOn=""/>
 		</f:entry>
 	</f:advanced>
 </j:jelly>
