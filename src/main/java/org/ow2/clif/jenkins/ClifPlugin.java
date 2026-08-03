@@ -24,7 +24,6 @@ package org.ow2.clif.jenkins;
 import java.io.File;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
-import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.QueryParameter;
 import hudson.Extension;
 import org.jenkinsci.Symbol;
@@ -124,7 +123,7 @@ public class ClifPlugin extends GlobalConfiguration {
 	 * if current value is blank.
 	 */
 	private void setDefaultClifRootDirIfNecessary() {
-		if (StringUtils.isBlank(this.clifRootDir)) {
+		if ((this.clifRootDir == null || this.clifRootDir.trim().isEmpty())) {
 			this.clifRootDir = DEFAULT_ROOT_DIR;
 		}
 	}

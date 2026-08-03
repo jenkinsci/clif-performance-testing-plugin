@@ -20,7 +20,6 @@
  */
 package org.ow2.clif.jenkins.parser.clif;
 
-import org.apache.commons.lang.StringUtils;
 import org.ow2.clif.storage.api.BladeDescriptor;
 import org.ow2.clif.storage.api.TestDescriptor;
 
@@ -102,7 +101,7 @@ public class ParsingContext {
 	}
 
 	protected String getTestPlanShortName() {
-		int nbUnderScore = StringUtils.countMatches(this.test.getName(), "_");
+		int nbUnderScore = (int) this.test.getName().chars().filter(c -> c == '_').count();
 		if (nbUnderScore < 2) {
 			return this.test.getName();
 		}

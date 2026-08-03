@@ -24,7 +24,6 @@ package org.ow2.clif.jenkins;
 import java.io.File;
 import java.io.IOException;
 import javax.annotation.Nonnull;
-import org.apache.commons.lang.StringUtils;
 import org.ow2.clif.storage.lib.filestorage.FileStorageCommons;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
@@ -255,7 +254,7 @@ public class ClifBuilder extends Builder
 			if (Util.fixEmptyAndTrim(value) == null) {
 				return FormValidation.error(Messages.Clif_TestPlanFileRequired());
 			}
-			if (!StringUtils.endsWithIgnoreCase(value, ".ctp")) {
+			if (value == null || !value.toLowerCase(java.util.Locale.ROOT).endsWith(".ctp")) {
 				return FormValidation.error(Messages.Clif_TestPlanFileNotCTP());
 			}
 			return FormValidation.ok();

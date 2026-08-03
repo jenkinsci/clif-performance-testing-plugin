@@ -26,7 +26,6 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.regex.Pattern;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
@@ -251,7 +250,7 @@ public class ClifPublisher
 		}
 
 		public FormValidation doCheckClifReportDirectory(@QueryParameter String value) {
-			if (StringUtils.isNotBlank(value)) {
+			if ((value != null && !value.trim().isEmpty())) {
 				return FormValidation.ok();
 			}
 			return FormValidation.error(Messages.Publisher_ClifReportDirectory_Mandatory());
@@ -266,7 +265,7 @@ public class ClifPublisher
 		}
 
 		public FormValidation doCheckPattern(@QueryParameter String value) {
-			if (StringUtils.isNotBlank(value)) {
+			if ((value != null && !value.trim().isEmpty())) {
 				try {
 					Pattern.compile(value);
 					return FormValidation.ok();
@@ -279,14 +278,14 @@ public class ClifPublisher
 		}
 
 		public FormValidation doCheckAlias(@QueryParameter String value) {
-			if (StringUtils.isNotBlank(value)) {
+			if ((value != null && !value.trim().isEmpty())) {
 				return FormValidation.ok();
 			}
 			return FormValidation.error(Messages.Publisher_ActionAlias_Alias_Mandatory());
 		}
 
 		public FormValidation doCheckActionType(@QueryParameter String value) {
-			if (StringUtils.isNotBlank(value)) {
+			if ((value != null && !value.trim().isEmpty())) {
 				return FormValidation.ok();
 			}
 			return FormValidation.error(Messages.Publisher_ResultConfig_ActionType_Mandatory());
@@ -329,7 +328,7 @@ public class ClifPublisher
 	}
 
 	protected static boolean isLong(String value) {
-		if (StringUtils.isNotBlank(value)) {
+		if ((value != null && !value.trim().isEmpty())) {
 			try {
 				Long.valueOf(value);
 			}
@@ -341,7 +340,7 @@ public class ClifPublisher
 	}
 
 	protected static long getLong(String value) {
-		if (StringUtils.isNotBlank(value)) {
+		if ((value != null && !value.trim().isEmpty())) {
 			try {
 				return Long.parseLong(value);
 			}
@@ -353,7 +352,7 @@ public class ClifPublisher
 	}
 
 	protected static boolean isDouble(String value) {
-		if (StringUtils.isNotBlank(value)) {
+		if ((value != null && !value.trim().isEmpty())) {
 			try {
 				Double.valueOf(value);
 			}
@@ -365,7 +364,7 @@ public class ClifPublisher
 	}
 
 	protected static double getDouble(String value) {
-		if (StringUtils.isNotBlank(value)) {
+		if ((value != null && !value.trim().isEmpty())) {
 			try {
 				return Double.parseDouble(value);
 			}

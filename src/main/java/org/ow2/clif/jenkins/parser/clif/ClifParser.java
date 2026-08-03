@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.lang.StringUtils;
 import org.ow2.clif.jenkins.chart.ChartConfiguration;
 import org.ow2.clif.jenkins.model.*;
 import org.ow2.clif.storage.api.*;
@@ -208,7 +207,7 @@ public class ClifParser {
 	}
 
 	protected static String extractTestPlanName(String clifTestPlanName) {
-		int nbUnderScore = StringUtils.countMatches(clifTestPlanName, "_");
+		int nbUnderScore = (int) clifTestPlanName.chars().filter(c -> c == '_').count();
 		if (nbUnderScore < 2) {
 			return clifTestPlanName;
 		}

@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.List;
-import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.remoting.RoleChecker;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
@@ -287,7 +286,7 @@ public final class ClifInstallation
 					return FormValidation.error(Messages.ClifInstallation_CredentialsMissing());
 				}
 
-				if (StringUtils.isBlank(schedulerURL)) {
+				if ((schedulerURL == null || schedulerURL.trim().isEmpty())) {
 					return FormValidation.error(Messages.ClifInstallation_SchedulerURLMissing());
 				}
 
