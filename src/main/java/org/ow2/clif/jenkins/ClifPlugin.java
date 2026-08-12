@@ -1,7 +1,7 @@
 /*
  * CLIF is a Load Injection Framework
  * Copyright (C) 2012 France Telecom R&D
- * Copyright (C) 2016 Orange SA
+ * Copyright (C) 2026 Orange SA
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -53,7 +53,7 @@ public class ClifPlugin extends GlobalConfiguration {
 
 	static final String DISPLAY_NAME = Messages.Plugin_DisplayName();
 
-	static public final String DEFAULT_ROOT_DIR = "clif";
+	public static final String DEFAULT_ROOT_DIR = "clif";
 
 	static final String URL = "clif";
 
@@ -191,7 +191,7 @@ public class ClifPlugin extends GlobalConfiguration {
 		}
 		if (result == null)
 		{
-			FormValidation.error(
+			return FormValidation.error(
 				Messages.ClifPlugin_BadDirectory(candidateFile));
 		}
 		return result;

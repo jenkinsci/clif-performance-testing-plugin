@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>4.48</version>
+		<version>5.25</version>
 	</parent>
 	<artifactId>clif-performance-testing</artifactId>
 	<version>${changelist}</version>
@@ -12,17 +12,19 @@
 	<name>CLIF Performance Testing</name>
 
 	<description>
-	This plug-in enables to run CLIF test plans from Jenkins and get detailed performance test reports,
-	including response time statistics, graphs, and performance trends (see https://clif.ow2.io).
-	Note: at least one CLIF server runtime to be installed along with this plug-in. 
+		This plug-in enables to run CLIF test plans from Jenkins and get detailed performance test reports,
+		including response time statistics, graphs, and performance trends (see https://clif.ow2.io).
+		Note: at least one CLIF server runtime to be installed along with this plug-in.
 	</description>
 
 	<url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
 
 	<properties>
 		<changelist>999999-SNAPSHOT</changelist>
-		<jenkins.version>2.376</jenkins.version>
+		<jenkins.baseline>2.479</jenkins.baseline>
+		<jenkins.version>${jenkins.baseline}.1</jenkins.version>
 		<gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
+		<java.level>21</java.level>
 	</properties>
 
 	<repositories>
@@ -30,19 +32,19 @@
 			<id>repo.jenkins-ci.org</id>
 			<url>https://repo.jenkins-ci.org/public/</url>
 		</repository>
-    	<repository>
-      		<releases><enabled>true</enabled></releases>
-      		<snapshots><enabled>false</enabled></snapshots>
-      		<id>ow2.release</id>
-      		<name>OW2 release repository</name>
-      		<url>https://repository.ow2.org/nexus/content/repositories/releases/</url>
-    	</repository>
-    	<repository>
-      		<releases><enabled>false</enabled></releases>
-      		<id>ow2-snapshot</id>
-      		<name>OW2 Snapshot Repository</name>
-      		<url>https://repository.ow2.org/nexus/content/repositories/snapshots</url>
-    	</repository>
+		<repository>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+			<id>ow2.release</id>
+			<name>OW2 release repository</name>
+			<url>https://repository.ow2.org/nexus/content/repositories/releases/</url>
+		</repository>
+		<repository>
+			<releases><enabled>false</enabled></releases>
+			<id>ow2-snapshot</id>
+			<name>OW2 Snapshot Repository</name>
+			<url>https://repository.ow2.org/nexus/content/repositories/snapshots</url>
+		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
@@ -50,61 +52,77 @@
 			<url>https://repo.jenkins-ci.org/public/</url>
 		</pluginRepository>
 	</pluginRepositories>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.jenkins.tools.bom</groupId>
+				<artifactId>bom-${jenkins.baseline}.x</artifactId>
+				<version>4136.vca_c3202a_7fd1</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.ow2.clif</groupId>
 			<artifactId>clif-api</artifactId>
 			<version>3.0.1</version>
-		 <exclusions>
-		  <exclusion>
-		   <groupId>log4j</groupId>
-		   <artifactId>log4j</artifactId>
-		  </exclusion>
-		  <exclusion>
-		   <groupId>org.bouncycastle</groupId>
-		   <artifactId>bcprov-jdk15</artifactId>
-		  </exclusion>
-		  <exclusion>
-		   <groupId>org.mortbay.jetty</groupId>
-		   <artifactId>jetty</artifactId>
-		  </exclusion>
-		  <exclusion>
-		   <groupId>org.eclipse.jetty</groupId>
-		   <artifactId>jetty-continuation</artifactId>
-		  </exclusion>
-		  <exclusion>
-		   <groupId>org.eclipse.jetty</groupId>
-		   <artifactId>jetty-io</artifactId>
-		  </exclusion>
-		  <exclusion>
-		   <groupId>org.eclipse.jetty</groupId>
-		   <artifactId>jetty-util</artifactId>
-		  </exclusion>
-		  <exclusion>
-		   <groupId>org.springframework</groupId>
-		   <artifactId>spring-jms</artifactId>
-		  </exclusion>
-		  <exclusion>
-		   <groupId>org.springframework</groupId>
-		   <artifactId>spring-tx</artifactId>
-		  </exclusion>
-		  <exclusion>
-		   <groupId>org.apache.geronimo.specs</groupId>
-		   <artifactId>geronimo-servlet_2.5_spec</artifactId>
-		  </exclusion>
-		 </exclusions>
+			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bouncycastle</groupId>
+					<artifactId>bcprov-jdk15</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jetty</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-continuation</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-io</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-util</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-http</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-tx</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.geronimo.specs</groupId>
+					<artifactId>geronimo-servlet_2.5_spec</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>commons-math</groupId>
 			<artifactId>commons-math</artifactId>
 			<version>1.2</version>
 		</dependency>
-		<dependency>
-			<groupId>org.jenkins-ci.modules</groupId>
-			<artifactId>instance-identity</artifactId>
-			<version>116.vf8f487400980</version>
-			<scope>test</scope>
-		</dependency>
+		<!--		<dependency>-->
+		<!--			<groupId>org.jenkins-ci.modules</groupId>-->
+		<!--			<artifactId>instance-identity</artifactId>-->
+		<!--			<version>185.v303dc7c645f9</version>-->
+		<!--			<scope>test</scope>-->
+		<!--		</dependency>-->
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
@@ -145,7 +163,7 @@
 										<artifactId>maven-enforcer-plugin</artifactId>
 										<versionRange>[1.4.1,)</versionRange>
 										<goals>
-											<goal>display-info</goal>	
+											<goal>display-info</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
@@ -159,7 +177,7 @@
 										<versionRange>[1.5,)</versionRange>
 										<goals>
 											<goal>generateTestStubs</goal>
-											<goal>testCompile</goal>	
+											<goal>testCompile</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
@@ -172,7 +190,7 @@
 										<artifactId>maven-localizer-plugin</artifactId>
 										<versionRange>[1.23,)</versionRange>
 										<goals>
-											<goal>generate</goal>	
+											<goal>generate</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>

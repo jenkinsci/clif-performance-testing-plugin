@@ -1,6 +1,7 @@
 /*
  * CLIF is a Load Injection Framework
  * Copyright (C) 2012 France Telecom R&D
+ * Copyright (C) 2026 Orange SA
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,7 +22,7 @@
 package jenkins.model;
 
 import java.io.File;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 import hudson.PluginManager;
 import static org.mockito.Mockito.mock;
 
@@ -39,8 +40,6 @@ public class Fake extends Jenkins {
 	 * run once in @Before
 	 * <p/>
 	 * method is fragile : when run twice, then reset will not undo properly
-	 *
-	 * @return
 	 */
 	public static Jenkins install() {
 		previous = Jenkins.HOLDER;

@@ -1,6 +1,7 @@
 /*
  * CLIF is a Load Injection Framework
  * Copyright (C) 2012 France Telecom R&D
+ * Copyright (C) 2026 Orange SA
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,7 +27,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.kohsuke.stapler.StaplerResponse;
+import org.kohsuke.stapler.StaplerResponse2;
 import org.ow2.clif.jenkins.jobs.Configurer;
 import org.ow2.clif.jenkins.jobs.FakeConfigurer;
 import org.ow2.clif.jenkins.jobs.Installations;
@@ -51,7 +52,7 @@ public class PreviewZipActionTest {
 	private ImportZipAction parent;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		jenkins = Fake.install();
 		configurer = new FakeConfigurer();
 
@@ -88,7 +89,7 @@ public class PreviewZipActionTest {
 	}
 
 	@Test
-	public void doesNotListNestedTestPlanInZip() throws Exception {
+	public void doesNotListNestedTestPlanInZip() {
 		assertThat(preview.pattern, equalTo("([^/]*)/([^/]*)\\.ctp"));
 	}
 
@@ -116,7 +117,7 @@ public class PreviewZipActionTest {
 	@Test
 	public void redirectsToPreview() throws Exception {
 		when(zip.id()).thenReturn("123");
-		StaplerResponse response = mock(StaplerResponse.class);
+		StaplerResponse2 response = mock(StaplerResponse2.class);
 
 		preview.process(response);
 

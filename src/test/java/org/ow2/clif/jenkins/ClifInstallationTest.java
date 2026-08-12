@@ -1,7 +1,7 @@
 /*
  * CLIF is a Load Injection Framework
  * Copyright (C) 2012 France Telecom R&D
- * Copyright (C) 2016 Orange SA
+ * Copyright (C) 2026 Orange SA
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,6 +26,7 @@ import java.util.Locale;
 import org.junit.Test;
 import org.jvnet.hudson.test.HudsonTestCase;
 import org.jvnet.localizer.LocaleProvider;
+import hudson.model.Hudson;
 import hudson.Util;
 import hudson.util.FormValidation;
 import static hudson.util.FormValidation.Kind.ERROR;
@@ -38,11 +39,10 @@ import static hudson.util.FormValidation.Kind.OK;
  */
 public class ClifInstallationTest extends HudsonTestCase
 {
-	static final private File goodInstallation =
-		new File("target/test-classes/goodProActiveInstallation");
-	static final private File goodCredentialsFile =
-		new File("target/test-classes/goodProActiveInstallation/credentialsFile.cred");
-	static final private String sampleSchedulerUrl = "http://localhost:2345/rest";
+	private static final File GOOD_INSTALLATION = new File("target/test-classes/goodProActiveInstallation");
+	private static final File GOOD_CREDENTIALS_FILE = new File(
+			"target/test-classes/goodProActiveInstallation/credentialsFile.cred");
+	private static final String SAMPLE_SCHEDULER_URL = "http://localhost:2345/rest";
 	private ClifInstallation.DescriptorImpl desc;
 
 
@@ -52,25 +52,26 @@ public class ClifInstallationTest extends HudsonTestCase
 		super.setUp();
 		desc = new ClifInstallation.DescriptorImpl();
 		LocaleProvider.setProvider(
-			new LocaleProvider()
-			{
-				@Override
-				public Locale get()
+				new LocaleProvider()
 				{
-					return Locale.getDefault();
-				}
-			});
+					@Override
+					public Locale get()
+					{
+						return Locale.getDefault();
+					}
+				});
 	}
 
 	@Test
 	public void testDoCheckInstallationGoodInstall()
 	{
+		assertNotNull("L'instance de Jenkins ne doit pas être null", Hudson.getInstanceOrNull());
 		doCheckInstallation(
-			goodInstallation,
-			sampleSchedulerUrl,
-			goodCredentialsFile,
-			OK,
-			Messages.ClifInstallation_ProactiveInstallationValid());
+				GOOD_INSTALLATION,
+				SAMPLE_SCHEDULER_URL,
+				GOOD_CREDENTIALS_FILE,
+				OK,
+				Messages.ClifInstallation_ProactiveInstallationValid());
 	}
 
 	@Test
@@ -78,53 +79,53 @@ public class ClifInstallationTest extends HudsonTestCase
 	{
 		File home = new File("");
 		doCheckInstallation(
-			home,
-			sampleSchedulerUrl,
-			goodCredentialsFile,
-			ERROR,
-			Messages.Clif_HomeRequired());
+				home,
+				SAMPLE_SCHEDULER_URL,
+				GOOD_CREDENTIALS_FILE,
+				ERROR,
+				Messages.Clif_HomeRequired());
 
 		home = new File("target/test-classes/org/ow2/clif/jenkins/ClifInstallationTest.class");
 		doCheckInstallation(
-			home,
-			sampleSchedulerUrl,
-			goodCredentialsFile,
-			ERROR,
-			Messages.Clif_NotADirectory(home));
+				home,
+				SAMPLE_SCHEDULER_URL,
+				GOOD_CREDENTIALS_FILE,
+				ERROR,
+				Messages.Clif_NotADirectory(home));
 
 		home = new File("target/test-classes/badClifInstallation");
 		doCheckInstallation(
-			home,
-			sampleSchedulerUrl,
-			goodCredentialsFile,
-			ERROR,
-			Messages.Clif_NotClifDirectory(home));
+				home,
+				SAMPLE_SCHEDULER_URL,
+				GOOD_CREDENTIALS_FILE,
+				ERROR,
+				Messages.Clif_NotClifDirectory(home));
 
 		home = new File("target/test-classes/badProActiveInstallation");
 		doCheckInstallation(
-			home,
-			sampleSchedulerUrl,
-			goodCredentialsFile,
-			ERROR,
-			Messages.ClifInstallation_BadProactiveInstallation());
+				home,
+				SAMPLE_SCHEDULER_URL,
+				GOOD_CREDENTIALS_FILE,
+				ERROR,
+				Messages.ClifInstallation_BadProactiveInstallation());
 	}
 
 	@Test
 	public void testDoCheckInstallationBadURL()
 	{
 		doCheckInstallation(
-			goodInstallation,
-			null,
-			goodCredentialsFile,
-			ERROR,
-			Messages.ClifInstallation_SchedulerURLMissing());
+				GOOD_INSTALLATION,
+				null,
+				GOOD_CREDENTIALS_FILE,
+				ERROR,
+				Messages.ClifInstallation_SchedulerURLMissing());
 
 		doCheckInstallation(
-			goodInstallation,
-			" ",
-			goodCredentialsFile,
-			ERROR,
-			Messages.ClifInstallation_SchedulerURLMissing());
+				GOOD_INSTALLATION,
+				" ",
+				GOOD_CREDENTIALS_FILE,
+				ERROR,
+				Messages.ClifInstallation_SchedulerURLMissing());
 	}
 
 	@Test
@@ -132,27 +133,27 @@ public class ClifInstallationTest extends HudsonTestCase
 	{
 		File schedulerCredentialsFile = new File("");
 		doCheckInstallation(
-			goodInstallation,
-			sampleSchedulerUrl,
-			schedulerCredentialsFile,
-			ERROR,
-			Messages.ClifInstallation_CredentialsMissing());
+				GOOD_INSTALLATION,
+				SAMPLE_SCHEDULER_URL,
+				schedulerCredentialsFile,
+				ERROR,
+				Messages.ClifInstallation_CredentialsMissing());
 
 		schedulerCredentialsFile = new File("target/test-classes/unknownFile");
 		doCheckInstallation(
-			goodInstallation,
-			sampleSchedulerUrl,
-			schedulerCredentialsFile,
-			ERROR,
-			Messages.ClifInstallation_CredentialsFileNotFound());
+				GOOD_INSTALLATION,
+				SAMPLE_SCHEDULER_URL,
+				schedulerCredentialsFile,
+				ERROR,
+				Messages.ClifInstallation_CredentialsFileNotFound());
 	}
 
 	private void doCheckInstallation(
-		final File home,
-		final String schedulerURL,
-		final File schedulerCredentialsFile,
-		final FormValidation.Kind expectedKind,
-		final String expectedMessage)
+			final File home,
+			final String schedulerURL,
+			final File schedulerCredentialsFile,
+			final FormValidation.Kind expectedKind,
+			final String expectedMessage)
 	{
 		final FormValidation res = desc.doCheckInstallation(home, schedulerURL, schedulerCredentialsFile, null, null);
 		assertEquals(Util.escape(expectedMessage), res.getMessage());

@@ -1,7 +1,7 @@
 /*
  * CLIF is a Load Injection Framework
  * Copyright (C) 2012 France Telecom R&D
- * Copyright (C) 2016 Orange SA
+ * Copyright (C) 2026 Orange SA
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -29,8 +29,8 @@ import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import org.apache.commons.collections.CollectionUtils;
-import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.StaplerResponse;
+import org.kohsuke.stapler.StaplerRequest2;
+import org.kohsuke.stapler.StaplerResponse2;
 import org.ow2.clif.jenkins.jobs.Configurer;
 import org.ow2.clif.jenkins.jobs.Installations;
 import org.ow2.clif.jenkins.jobs.Jobs;
@@ -87,12 +87,12 @@ public class PreviewZipAction {
 	@SuppressWarnings("unchecked")
 	PreviewZipAction diff() throws IOException {
 		List<String> newPlans = zip.entries(pattern);
-		String dir = zip.basedir();
+		String zipDir = zip.basedir();
 
 		List<String> oldPlans = Lists.newArrayList();
 		for (Item item : jenkins.getAllItems()) {
 			String name = item.getName();
-			if (name.startsWith(dir + "-")) {
+			if (name.startsWith(zipDir + "-")) {
 				oldPlans.add(Jobs.toPlan(name));
 			}
 		}
@@ -116,7 +116,7 @@ public class PreviewZipAction {
 	 * @throws IOException process exception
 	 * @throws InterruptedException process was interrupted
 	 */
-	public void doProcess(StaplerRequest req, StaplerResponse res)
+	public void doProcess(StaplerRequest2 req, StaplerResponse2 res)
 			throws IOException, InterruptedException {
 		clif.use(req.getParameter("clif"));
 
@@ -147,7 +147,7 @@ public class PreviewZipAction {
 
 	// boilerplate
 	@SuppressWarnings("rawtypes")
-	Map<String, Set<String>> parse(StaplerRequest req) {
+	Map<String, Set<String>> parse(StaplerRequest2 req) {
 		Map<String, Set<String>> results = Maps.newHashMap();
 		ParameterParser parser = new ParameterParser();
 		for (Enumeration names = req.getParameterNames(); names.hasMoreElements(); ) {
@@ -171,8 +171,8 @@ public class PreviewZipAction {
 		return this;
 	}
 
-	public PreviewZipAction process(StaplerResponse res)
-			throws IOException, InterruptedException {
+	public PreviewZipAction process(StaplerResponse2 res)
+			throws IOException {
 
 		diff();
 
@@ -206,7 +206,7 @@ public class PreviewZipAction {
 	}
 
 	FreeStyleProject newProject(@Nonnull String plan)
-			throws IOException, InterruptedException {
+			throws IOException {
 		FreeStyleProject project = Jobs.newJob(jenkins, Jobs.toJob(plan));
 		return clif.configure(project, dir, plan);
 	}
