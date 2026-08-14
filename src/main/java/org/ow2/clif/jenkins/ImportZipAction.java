@@ -25,15 +25,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
+import hudson.model.Item;
+import hudson.model.RootAction;
+import jenkins.model.Jenkins;
 import org.apache.commons.fileupload2.core.DiskFileItem;
 import org.apache.commons.fileupload2.core.DiskFileItemFactory;
 import org.apache.commons.fileupload2.jakarta.servlet5.JakartaServletDiskFileUpload;
 import org.kohsuke.stapler.StaplerRequest2;
 import org.kohsuke.stapler.StaplerResponse2;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 import org.ow2.clif.jenkins.jobs.Zip;
 import com.google.common.collect.Maps;
 import hudson.Extension;
-import hudson.model.RootAction;
 
 
 @Extension
@@ -43,20 +47,25 @@ public class ImportZipAction implements RootAction {
 	public ImportZipAction() {
 	}
 
+	@Override
 	public String getIconFileName() {
 		return "/plugin/clif-performance-testing/images/clif-24x24.png";
 	}
 
+	@Override
 	public String getDisplayName() {
 		return Messages.ZipImporter_DisplayName();
 	}
 
+	@Override
 	public String getUrlName() {
 		return "clif";
 	}
 
+	@RequirePOST
 	public void doImport(StaplerRequest2 req, StaplerResponse2 res)
 			throws IOException {
+		Jenkins.get().hasAnyPermission(Item.CREATE, Item.CONFIGURE);
 		new PreviewZipAction(new Zip(readZipFile(req))).with(this).process(res);
 	}
 

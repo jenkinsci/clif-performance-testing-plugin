@@ -31,6 +31,7 @@ import javax.annotation.Nonnull;
 import org.apache.commons.collections.CollectionUtils;
 import org.kohsuke.stapler.StaplerRequest2;
 import org.kohsuke.stapler.StaplerResponse2;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 import org.ow2.clif.jenkins.jobs.Configurer;
 import org.ow2.clif.jenkins.jobs.Installations;
 import org.ow2.clif.jenkins.jobs.Jobs;
@@ -110,14 +111,12 @@ public class PreviewZipAction {
 
 	/**
 	 * responds to POST /clif/previews/12345
-	 *
-	 * @param req request
-	 * @param res response
-	 * @throws IOException process exception
-	 * @throws InterruptedException process was interrupted
 	 */
+	@RequirePOST
 	public void doProcess(StaplerRequest2 req, StaplerResponse2 res)
 			throws IOException, InterruptedException {
+		Jenkins.get().hasAnyPermission(Item.CREATE, Item.CONFIGURE);
+
 		clif.use(req.getParameter("clif"));
 
 		Map<String, Set<String>> actions = parse(req);

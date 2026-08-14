@@ -1,7 +1,6 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout"
-         xmlns:f="/lib/form">
-	<l:layout title="clif" secured="true">
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout" xmlns:f="/lib/form">
+	<l:layout title="CLIF" permissions="${hudson.model.Item.CREATE} ${hudson.model.Item.CONFIGURE}">
 		<l:side-panel>
 			<l:tasks>
 				<l:task icon="icon-up icon-md" href="${rootURL}/" title="${%Back to Dashboard}"/>
@@ -9,7 +8,7 @@
 		</l:side-panel>
 		<l:main-panel>
 			<h1>${%title}</h1>
-			<f:form method="post" action="import" enctype="multipart/form-data">
+			<f:form method="post" action="import" enctype="multipart/form-data" name="clif-import-select">
 				<f:entry title="${%input.file.text}" field="name">
 					<m:input xmlns:m="jelly:hudson.util.jelly.MorphTagLibrary"
 					         class="setting-input"
