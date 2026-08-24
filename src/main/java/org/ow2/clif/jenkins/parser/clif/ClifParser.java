@@ -28,10 +28,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.lang.StringUtils;
 import org.ow2.clif.jenkins.chart.ChartConfiguration;
-import org.ow2.clif.jenkins.model.*;
-import org.ow2.clif.storage.api.*;
+import org.ow2.clif.jenkins.model.Alarm;
+import org.ow2.clif.jenkins.model.Blade;
+import org.ow2.clif.jenkins.model.ClifReport;
+import org.ow2.clif.jenkins.model.Injector;
+import org.ow2.clif.jenkins.model.Measure;
+import org.ow2.clif.jenkins.model.Probe;
+import org.ow2.clif.jenkins.model.TestPlan;
+import org.ow2.clif.jenkins.utils.StringUtils;
+import org.ow2.clif.storage.api.AlarmEvent;
+import org.ow2.clif.storage.api.BladeDescriptor;
+import org.ow2.clif.storage.api.BladeEvent;
+import org.ow2.clif.storage.api.BladeFilter;
+import org.ow2.clif.storage.api.StorageRead;
+import org.ow2.clif.storage.api.TestDescriptor;
 import org.ow2.clif.storage.lib.filestorage.FileStorageReader;
 import org.ow2.clif.storage.lib.util.DateEventFilter;
 import org.ow2.clif.supervisor.api.ClifException;
@@ -161,7 +172,7 @@ public class ClifParser {
 		}
 		catch (Exception e) {
 			logger.println("Error during parsing of CLIF report directory " + e.getMessage());
-			e.printStackTrace();
+			e.printStackTrace(logger);
 			throw new ClifParserException("Error during parsing of CLIF report directory");
 		}
 		return this.report;
@@ -208,7 +219,7 @@ public class ClifParser {
 	}
 
 	protected static String extractTestPlanName(String clifTestPlanName) {
-		int nbUnderScore = StringUtils.countMatches(clifTestPlanName, "_");
+		int nbUnderScore = StringUtils.countMatches(clifTestPlanName, '_');
 		if (nbUnderScore < 2) {
 			return clifTestPlanName;
 		}
@@ -220,7 +231,7 @@ public class ClifParser {
 		if (str == null || searchStr == null || ordinal <= 0) {
 			return -1;
 		}
-		if (searchStr.length() == 0) {
+		if (searchStr.isEmpty()) {
 			return str.length();
 		}
 		int found = 0;
@@ -512,17 +523,17 @@ public class ClifParser {
 	 * Any {@link Number} is directly converted. {@link Boolean} are also converted: Boolean.TRUE = 1 and Boolean.FALSE = 0.
 	 * For other objects, the return value is 1
 	 *
-	 * @param value Obejct to convert
-	 * @return double value associeted
+	 * @param value Object to convert
+	 * @return double value associated
 	 */
 	protected static double toDouble(Object value) {
 		double vals = 0;
 		if (value != null) {
-			if (value instanceof Number) {
-				vals = ((Number) value).doubleValue();
+			if (value instanceof Number valNumber) {
+				vals = valNumber.doubleValue();
 			}
-			else if (value instanceof Boolean) {
-				vals = (Boolean) value ? 1.0 : 0.0;
+			else if (value instanceof Boolean valBoolean) {
+				vals = valBoolean ? 1.0 : 0.0;
 			}
 			else {
 				vals = 1.0;

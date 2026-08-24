@@ -25,10 +25,10 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.List;
-import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.remoting.RoleChecker;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
+import org.ow2.clif.jenkins.utils.StringUtils;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.Functions;
@@ -197,6 +197,7 @@ public final class ClifInstallation
 		 * of a CLIF installation
 		 * @return validation result (ok or error)
 		 */
+		@Override
 		public FormValidation doCheckHome(@QueryParameter File value) {
 			// this can be used to check the existence of a file on the server, so needs to be protected
 			if (!Hudson.get().hasPermission(Hudson.ADMINISTER)) {
@@ -228,6 +229,7 @@ public final class ClifInstallation
 			return FormValidation.ok();
 		}
 
+		@Override
 		public FormValidation doCheckName(@QueryParameter String value) {
 			if (Util.fixEmptyAndTrim(value) == null) {
 				return FormValidation.error(Messages.Clif_NameRequired());
@@ -294,7 +296,6 @@ public final class ClifInstallation
 				return FormValidation.ok(Messages.ClifInstallation_ProactiveInstallationValid());
 			}
 			catch (Exception e) {
-				//return FormValidation.errorWithMarkup("<p>"+Messages.Mailer_FailedToSendEmail()+"</p><pre>"+Util.escape(Functions.printThrowable(e))+"</pre>");
 				return FormValidation.error(Messages.ClifInstallation_BadProactiveInstallation());
 			}
 		}

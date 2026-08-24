@@ -26,7 +26,6 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.regex.Pattern;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
@@ -34,6 +33,7 @@ import org.ow2.clif.jenkins.chart.ChartConfiguration;
 import org.ow2.clif.jenkins.model.ClifReport;
 import org.ow2.clif.jenkins.parser.clif.ClifParser;
 import org.ow2.clif.jenkins.parser.clif.ClifParserException;
+import org.ow2.clif.jenkins.utils.StringUtils;
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
@@ -176,6 +176,7 @@ public class ClifPublisher
 		return project instanceof Project ? new ClifProjectAction((Project<?, ?>) project) : null;
 	}
 
+	@Override
 	public BuildStepMonitor getRequiredMonitorService() {
 		return BuildStepMonitor.NONE;
 	}
@@ -318,10 +319,8 @@ public class ClifPublisher
 
 		public FormValidation doCheckKeepPercentage(@QueryParameter String value) {
 			FormValidation res = checkPositiveDoubleValue(value, Messages.Publisher_KeepPercentage_Format());
-			if (FormValidation.ok().equals(res)) {
-				if (getDouble(value) > 100) {
-					return FormValidation.error(Messages.Publisher_KeepPercentage_Invalid());
-				}
+			if (FormValidation.ok().equals(res) && getDouble(value) > 100) {
+				return FormValidation.error(Messages.Publisher_KeepPercentage_Invalid());
 			}
 			return res;
 		}

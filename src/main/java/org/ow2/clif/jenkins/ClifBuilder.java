@@ -24,7 +24,7 @@ package org.ow2.clif.jenkins;
 import java.io.File;
 import java.io.IOException;
 import javax.annotation.Nonnull;
-import org.apache.commons.lang.StringUtils;
+import org.ow2.clif.jenkins.utils.StringUtils;
 import org.ow2.clif.storage.lib.filestorage.FileStorageCommons;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
@@ -48,7 +48,7 @@ import hudson.model.BuildListener;
 /**
  * Clif task builder, based on CommandInterpreter, and finally on
  * BatchFile or Shell depending on the operating system.
- * 
+ *
  * @author Julien Coste
  * @author Bruno Dillenseger
  */
@@ -149,7 +149,7 @@ public class ClifBuilder extends Builder
 				javaOpts += " " + clifInst.getOptions();
 			}
 		}
-		String clifCmd = "\"" + clifInst.getHome(); 
+		String clifCmd = "\"" + clifInst.getHome();
 		if (Functions.isWindows())
 		{
 			javaOpts = "set JAVA_OPTS=" + javaOpts + " & ";

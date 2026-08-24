@@ -20,9 +20,9 @@
  */
 package org.ow2.clif.jenkins.parser.clif;
 
-import org.apache.commons.lang.StringUtils;
 import org.ow2.clif.storage.api.BladeDescriptor;
 import org.ow2.clif.storage.api.TestDescriptor;
+import org.ow2.clif.jenkins.utils.StringUtils;
 
 /**
  * @author Julien Coste
@@ -102,7 +102,7 @@ public class ParsingContext {
 	}
 
 	protected String getTestPlanShortName() {
-		int nbUnderScore = StringUtils.countMatches(this.test.getName(), "_");
+		int nbUnderScore = StringUtils.countMatches(this.test.getName(), '_');
 		if (nbUnderScore < 2) {
 			return this.test.getName();
 		}
@@ -114,7 +114,7 @@ public class ParsingContext {
 		if (str == null || searchStr == null || ordinal <= 0) {
 			return -1;
 		}
-		if (searchStr.length() == 0) {
+		if (searchStr.isEmpty()) {
 			return str.length();
 		}
 		int found = 0;
