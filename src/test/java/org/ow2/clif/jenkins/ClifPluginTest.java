@@ -83,7 +83,7 @@ class ClifPluginTest {
 		submit(form);
 
 */
-		// En attendant, on change le test
+		// In the meanwhile, the test is changed
 		clifPlugin.setClifRootDir(relativePath);
 		assertEquals(root, clifPlugin.dir(), "Verify clif root configured at relative path.");
 	}
