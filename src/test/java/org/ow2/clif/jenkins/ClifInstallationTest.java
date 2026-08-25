@@ -156,7 +156,7 @@ class ClifInstallationTest {
 			final FormValidation.Kind expectedKind,
 			final String expectedMessage) {
 		final FormValidation res = desc.doCheckInstallation(home, schedulerURL, schedulerCredentialsFile, null, null);
-		assertEquals(res.getMessage(), Util.escape(expectedMessage));
-		assertEquals(res.kind, expectedKind);
+		assertEquals(Util.escape(expectedMessage), res.getMessage());
+		assertEquals(expectedKind, res.kind);
 	}
 }
