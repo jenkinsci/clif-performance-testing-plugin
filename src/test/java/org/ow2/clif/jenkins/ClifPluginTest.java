@@ -85,7 +85,7 @@ class ClifPluginTest {
 */
 		// In the meanwhile, the test is changed
 		clifPlugin.setClifRootDir(relativePath);
-		assertEquals(root, clifPlugin.dir(), "Verify clif root configured at relative path.");
+		assertEquals(root, clifPlugin.dir(), "Verify Clif root is configured as a relative path.");
 	}
 
 	@Test
