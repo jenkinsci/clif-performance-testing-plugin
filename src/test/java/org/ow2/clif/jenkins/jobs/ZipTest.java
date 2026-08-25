@@ -26,22 +26,21 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.tools.ant.types.ZipScanner;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 
-public class ZipTest {
+class ZipTest {
+
 	private Zip zip;
 
-	static private void deleteFileOnExit(File fileOrDir)
-	{
-		if (fileOrDir.isDirectory())
-		{
-			for (File f : fileOrDir.listFiles())
-			{
+	private static void deleteFileOnExit(File fileOrDir) {
+		if (fileOrDir.isDirectory()) {
+			for (File f : fileOrDir.listFiles()) {
 				deleteFileOnExit(f);
 			}
 		}
@@ -49,7 +48,7 @@ public class ZipTest {
 	}
 
 	@Test
-	public void namesAreZipEntriesFileName() throws Exception {
+	void namesAreZipEntriesFileName() throws Exception {
 		zip = new Zip("src/test/resources/zips/sources.zip");
 		assertThat(zip.entries(".*"),
 				contains("foo.rb", "py.py", "get.rb"));
@@ -59,7 +58,7 @@ public class ZipTest {
 	}
 
 	@Test
-	public void namesCanBeFiltered() throws Exception {
+	void namesCanBeFiltered() throws Exception {
 		zip = new Zip("src/test/resources/zips/sources.zip");
 		// OH! "foo.rb" does not match /rb$/
 		// it does in rb, erl, js
@@ -68,13 +67,13 @@ public class ZipTest {
 	}
 
 	@Test
-	public void namesAreIdempotent() throws Exception {
+	void namesAreIdempotent() throws Exception {
 		zip = new Zip("src/test/resources/zips/sources.zip");
 		assertThat(zip.entries(".*rb$"), equalTo(zip.entries(".*rb$")));
 	}
 
 	@Test
-	public void namesAreRelativePathFromZip() throws Exception {
+	void namesAreRelativePathFromZip() throws Exception {
 		zip = new Zip("src/test/resources/zips/nested.zip");
 		assertThat(zip.entries("(.*)\\.coffee$"),
 			contains(
@@ -85,7 +84,7 @@ public class ZipTest {
 	}
 
 	@Test
-	public void nestedTestPlanCanBeFilteredUsingCleverRegularExpression()
+	void nestedTestPlanCanBeFilteredUsingCleverRegularExpression()
 			throws Exception {
 		zip = new Zip("src/test/resources/zips/nested.zip");
 		assertThat(zip.entries("(.*)\\.ctp"),
@@ -98,25 +97,25 @@ public class ZipTest {
 	}
 
 	@Test
-	public void basedirIsFirstEntryWhenDirectory() throws Exception {
+	void basedirIsFirstEntryWhenDirectory() throws Exception {
 		zip = new Zip("src/test/resources/zips/nested.zip");
 		assertThat(zip.basedir(), equalTo("samples"));
 	}
 
 	@Test
-	public void basedirIsFirstEntryLeadingDirectoryWhenFile() throws Exception {
+	void basedirIsFirstEntryLeadingDirectoryWhenFile() throws Exception {
 		zip = new Zip("src/test/resources/zips/clif-examples-1.zip");
 		assertThat(zip.basedir(), equalTo("examples"));
 	}
 
 	@Test
-	public void dirIsEmptyOtherwise() throws Exception {
+	void dirIsEmptyOtherwise() throws Exception {
 		zip = new Zip("src/test/resources/zips/sources.zip");
 		assertThat(zip.basedir(), emptyString());
 	}
 
 	@Test
-	public void antLearningTest() throws Exception {
+	void antLearningTest() {
 		ZipScanner zip = new ZipScanner();
 		zip.setSrc(new File("src/test/resources/zips/clif-examples-1.zip"));
 
@@ -125,8 +124,7 @@ public class ZipTest {
 	}
 
 	@Test
-	public void maliciousPathIsSanitized() throws Exception
-	{
+	void maliciousPathIsSanitized() throws Exception {
 		zip = new Zip("src/test/resources/zips/ProofOfConceptSEC2413.zip");
 		assertThat(zip.entries(null),
 			contains(
@@ -137,8 +135,7 @@ public class ZipTest {
 	}
 
 	@Test
-	public void maliciousPathIsSanitizedOnExtract() throws Exception
-	{
+	void maliciousPathIsSanitizedOnExtract() throws Exception {
 		zip = new Zip("src/test/resources/zips/ProofOfConceptSEC2413.zip");
 		File tmpDir = Files.createTempDirectory(
 			"CLIF-test-maliciousPathIsSanitizedOnExtract")
@@ -150,8 +147,7 @@ public class ZipTest {
 	}
 
 	@Test
-	public void maliciousPathIsSanitizedOnBasedir() throws Exception
-	{
+	void maliciousPathIsSanitizedOnBasedir() throws Exception {
 		zip = new Zip("src/test/resources/zips/ProofOfConceptSEC2413.zip");
 		assertThat(zip.basedir(), equalTo("UnexpectedDir"));
 	}

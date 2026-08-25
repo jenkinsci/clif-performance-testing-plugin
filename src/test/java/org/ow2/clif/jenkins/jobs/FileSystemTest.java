@@ -23,44 +23,46 @@ package org.ow2.clif.jenkins.jobs;
 
 import java.io.File;
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class FileSystemTest {
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class FileSystemTest {
+
 	private String path;
 	private File workspaces;
 	private FileSystem fs;
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 		path = "target/workspaces";
 		workspaces = new File(path);
 		FileUtils.forceMkdir(workspaces);
 		fs = new FileSystem(path);
 	}
 
-	@After
-	public void tearDown() throws Exception {
+	@AfterEach
+	void tearDown() throws Exception {
 		FileUtils.deleteDirectory(workspaces);
 	}
 
-	File mkdir(String p) throws Exception {
+	private File mkdir(String p) throws Exception {
 		File f = new File(fs.dir() + "/" + p);
 		FileUtils.forceMkdir(f);
 		return f;
 	}
 
-	File touch(String p) throws Exception {
+	private File touch(String p) throws Exception {
 		File f = new File(fs.dir() + "/" + p);
 		FileUtils.touch(f);
 		return f;
 	}
 
 	@Test
-	public void removesDir() throws Exception {
+	void removesDir() throws Exception {
 		File f = mkdir("report/synchro_2012-04-11_10h53m40");
 		File monster = touch("report/synchro_2012-04-11_10h53m40.ctp");
 		touch("synchro.ctp");

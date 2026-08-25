@@ -20,13 +20,14 @@
  */
 package org.ow2.clif.jenkins;
 
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
 
-public class ClifPublisherTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class ClifPublisherTest {
 
 	@Test
-	public void unboundConstructor() throws Exception {
+	void unboundConstructor() {
 		ClifPublisher publisher = new ClifPublisher("bar");
 		assertEquals(600, publisher.getChartHeight());
 		assertEquals(1200, publisher.getChartWidth());

@@ -22,7 +22,7 @@ package org.ow2.clif.jenkins.parser.clif;
 
 import java.io.File;
 import java.util.Date;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.ow2.clif.jenkins.chart.ChartConfiguration;
 import org.ow2.clif.jenkins.model.ClifReport;
 import org.ow2.clif.jenkins.model.TestPlan;
@@ -33,7 +33,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,10 +42,10 @@ import static org.junit.Assert.assertNotNull;
  * Time: 16:52
  * To change this template use File | Settings | File Templates.
  */
-public class ClifParserTest {
-	@Test
-	public void testParse() throws Exception {
+class ClifParserTest {
 
+	@Test
+	void testParse() throws Exception {
 		long start = -System.currentTimeMillis();
 		File reportDir = new File("src/test/resources/reports");
 		File buildDir = new File("target/clif");

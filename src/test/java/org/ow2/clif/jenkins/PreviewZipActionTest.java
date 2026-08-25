@@ -24,9 +24,9 @@ package org.ow2.clif.jenkins;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.kohsuke.stapler.StaplerResponse2;
 import org.ow2.clif.jenkins.jobs.Configurer;
 import org.ow2.clif.jenkins.jobs.FakeConfigurer;
@@ -44,15 +44,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class PreviewZipActionTest {
+class PreviewZipActionTest {
+
 	private Jenkins jenkins;
 	private PreviewZipAction preview;
 	private Zip zip;
 	private Configurer configurer;
 	private ImportZipAction parent;
 
-	@Before
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		jenkins = Fake.install();
 		configurer = new FakeConfigurer();
 
@@ -65,12 +66,12 @@ public class PreviewZipActionTest {
 		preview.installations = mock(Installations.class);
 	}
 
-	@After
-	public void reset() {
+	@AfterEach
+	void reset() {
 		Fake.uninstall();
 	}
 
-	List<Item> jobs(String... names) {
+	private List<Item> jobs(String... names) {
 		List<Item> jobs = new ArrayList<>();
 		for (String name : names) {
 			FreeStyleProject job = job(name);
@@ -80,7 +81,7 @@ public class PreviewZipActionTest {
 		return jobs;
 	}
 
-	FreeStyleProject job(String name) {
+	private FreeStyleProject job(String name) {
 		FreeStyleProject job = mock(FreeStyleProject.class);
 
 		when(job.getName()).thenReturn(name);
@@ -89,24 +90,24 @@ public class PreviewZipActionTest {
 	}
 
 	@Test
-	public void doesNotListNestedTestPlanInZip() {
+	void doesNotListNestedTestPlanInZip() {
 		assertThat(preview.pattern, equalTo("([^/]*)/([^/]*)\\.ctp"));
 	}
 
 	@Test
-	public void jobNameIsDasherizedFileNameWithoutExtension() throws Exception {
+	void jobNameIsDasherizedFileNameWithoutExtension() throws Exception {
 		FreeStyleProject project = preview.create("red/tomato.erl");
 		assertThat(project.getName(), equalTo("red-tomato"));
 	}
 
 	@Test
-	public void installedJobReplacesPreviousOne() throws Exception {
+	void installedJobReplacesPreviousOne() throws Exception {
 		FreeStyleProject project = preview.create("red/tomato.erl");
 		verify(jenkins).putItem(project);
 	}
 
 	@Test
-	public void uninstalledJobIsDeleted() throws Exception {
+	void uninstalledJobIsDeleted() throws Exception {
 		FreeStyleProject project = job("red-tomato");
 
 		preview.delete("red/tomato.erl");
@@ -115,7 +116,7 @@ public class PreviewZipActionTest {
 	}
 
 	@Test
-	public void redirectsToPreview() throws Exception {
+	void redirectsToPreview() throws Exception {
 		when(zip.id()).thenReturn("123");
 		StaplerResponse2 response = mock(StaplerResponse2.class);
 
@@ -126,7 +127,7 @@ public class PreviewZipActionTest {
 	}
 
 	@Test
-	public void diffingZipAgainstJobs() throws Exception {
+	void diffingZipAgainstJobs() throws Exception {
 		jobs("examples-dummy", "examples-synchro", "rebar");
 		when(zip.entries(anyString())).thenReturn(
 				Arrays.asList("examples/dummy.ctp", "examples/ftp.ctp")
@@ -139,5 +140,4 @@ public class PreviewZipActionTest {
 		assertThat(preview.uninstalls, contains("examples/synchro.ctp"));
 		assertThat(preview.upgrades, contains("examples/dummy.ctp"));
 	}
-
 }

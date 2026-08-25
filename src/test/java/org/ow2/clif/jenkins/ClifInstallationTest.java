@@ -23,33 +23,38 @@ package org.ow2.clif.jenkins;
 
 import java.io.File;
 import java.util.Locale;
-import org.junit.Test;
-import org.jvnet.hudson.test.HudsonTestCase;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 import org.jvnet.localizer.LocaleProvider;
 import hudson.model.Hudson;
 import hudson.Util;
 import hudson.util.FormValidation;
 import static hudson.util.FormValidation.Kind.ERROR;
 import static hudson.util.FormValidation.Kind.OK;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 /**
  * Checking a variety of valid and invalid CLIF installations
  * @author Bruno Dillenseger
  */
-public class ClifInstallationTest extends HudsonTestCase
-{
+@WithJenkins
+class ClifInstallationTest {
+
 	private static final File GOOD_INSTALLATION = new File("target/test-classes/goodProActiveInstallation");
 	private static final File GOOD_CREDENTIALS_FILE = new File(
 			"target/test-classes/goodProActiveInstallation/credentialsFile.cred");
 	private static final String SAMPLE_SCHEDULER_URL = "http://localhost:2345/rest";
 	private ClifInstallation.DescriptorImpl desc;
+	private JenkinsRule j;
 
-
-	@Override
-	protected void setUp() throws Exception
-	{
-		super.setUp();
+	@BeforeEach
+	void setUp(JenkinsRule rule) {
+		j = rule;
 		desc = new ClifInstallation.DescriptorImpl();
 		LocaleProvider.setProvider(
 				new LocaleProvider()
@@ -63,9 +68,8 @@ public class ClifInstallationTest extends HudsonTestCase
 	}
 
 	@Test
-	public void testDoCheckInstallationGoodInstall()
-	{
-		assertNotNull("L'instance de Jenkins ne doit pas être null", Hudson.getInstanceOrNull());
+	void testDoCheckInstallationGoodInstall() {
+		assertNotNull(Hudson.getInstanceOrNull(), "L'instance de Jenkins ne doit pas être null");
 		doCheckInstallation(
 				GOOD_INSTALLATION,
 				SAMPLE_SCHEDULER_URL,
@@ -75,8 +79,7 @@ public class ClifInstallationTest extends HudsonTestCase
 	}
 
 	@Test
-	public void testDoCheckInstallationBadHome()
-	{
+	void testDoCheckInstallationBadHome() {
 		File home = new File("");
 		doCheckInstallation(
 				home,
@@ -111,8 +114,7 @@ public class ClifInstallationTest extends HudsonTestCase
 	}
 
 	@Test
-	public void testDoCheckInstallationBadURL()
-	{
+	void testDoCheckInstallationBadURL() {
 		doCheckInstallation(
 				GOOD_INSTALLATION,
 				null,
@@ -129,8 +131,7 @@ public class ClifInstallationTest extends HudsonTestCase
 	}
 
 	@Test
-	public void testDoCheckInstallationBadCredentialsFile()
-	{
+	void testDoCheckInstallationBadCredentialsFile() {
 		File schedulerCredentialsFile = new File("");
 		doCheckInstallation(
 				GOOD_INSTALLATION,
@@ -153,10 +154,9 @@ public class ClifInstallationTest extends HudsonTestCase
 			final String schedulerURL,
 			final File schedulerCredentialsFile,
 			final FormValidation.Kind expectedKind,
-			final String expectedMessage)
-	{
+			final String expectedMessage) {
 		final FormValidation res = desc.doCheckInstallation(home, schedulerURL, schedulerCredentialsFile, null, null);
-		assertEquals(Util.escape(expectedMessage), res.getMessage());
-		assertEquals(expectedKind, res.kind);
+		assertEquals(res.getMessage(), Util.escape(expectedMessage));
+		assertEquals(res.kind, expectedKind);
 	}
 }

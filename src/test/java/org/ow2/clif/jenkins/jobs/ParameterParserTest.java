@@ -20,22 +20,24 @@
  */
 package org.ow2.clif.jenkins.jobs;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anEmptyMap;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ParameterParserTest {
+class ParameterParserTest {
+
 	private ParameterParser parser;
 
-	@Before
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		parser = new ParameterParser();
 	}
 
 	@Test
-	public void parsesHashNotationFor() throws Exception {
+	void parsesHashNotationFor() {
 		// convention like this one for parameter name
 		// http://guides.rubyonrails.org/action_controller_overview.html#hash-and-array-parameters
 		assertThat(
@@ -43,7 +45,7 @@ public class ParameterParserTest {
 	}
 
 	@Test
-	public void isSilentOtherwise() throws Exception {
+	void isSilentOtherwise() {
 		assertThat(parser.parse("json"), anEmptyMap());
 	}
 }

@@ -23,22 +23,24 @@ package org.ow2.clif.jenkins.model;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Julien Coste
  */
-public class TestPlanTest {
+class TestPlanTest {
+
 	private TestPlan tp1;
 	private Probe cpu;
 	private Injector action;
 	private Injector uri;
 	private Measure uri2;
 
-	@Before
-	public void initData() {
+	@BeforeEach
+	void initData() {
 		tp1 = new TestPlan("TestPlan1", new Date());
 
 		cpu = new Probe("0", "CPU", "localhost", "60 1000", "CPU", "");
@@ -67,7 +69,7 @@ public class TestPlanTest {
 	}
 
 	@Test
-	public void test_getServers() {
+	void test_getServers() {
 		Set<String> servers = tp1.getServers();
 		assertNotNull(servers);
 		assertEquals(2, servers.size());
@@ -76,7 +78,7 @@ public class TestPlanTest {
 	}
 
 	@Test
-	public void test_getInjectorsByServer() {
+	void test_getInjectorsByServer() {
 		List<Injector> injectors = tp1.getInjectorsByServer("localhost");
 		assertNotNull(injectors);
 		assertEquals(1, injectors.size());
@@ -89,11 +91,10 @@ public class TestPlanTest {
 	}
 
 	@Test
-	public void test_getProbesByServer() {
+	void test_getProbesByServer() {
 		List<Probe> probes = tp1.getProbesByServer("localhost");
 		assertNotNull(probes);
 		assertEquals(1, probes.size());
 		assertTrue(probes.contains(cpu));
 	}
-
 }

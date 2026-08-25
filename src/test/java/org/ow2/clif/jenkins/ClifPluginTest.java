@@ -21,15 +21,24 @@
 package org.ow2.clif.jenkins;
 
 import java.io.File;
-import org.junit.Assert;
-import org.junit.Test;
-import org.jvnet.hudson.test.HudsonTestCase;
 
-public class ClifPluginTest extends HudsonTestCase {
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+@WithJenkins
+class ClifPluginTest {
+
+	private JenkinsRule j;
+
+	@BeforeEach
+	void setUp(JenkinsRule rule) {
+		j = rule;
 /* En commentaire tant que Clif-core embarque un Xalan 2.5.1
 		hudson.setSecurityRealm(new HudsonPrivateSecurityRealm(true));
 		webClient = createWebClient();
@@ -37,66 +46,53 @@ public class ClifPluginTest extends HudsonTestCase {
 	}
 
 	@Test
-	public void testGetClifRootDirAbsolutePath() throws Exception {
+	void testGetClifRootDirAbsolutePath() throws Exception {
 		final ClifPlugin clifPlugin = ClifPlugin.get();
-		try {
-			// create a unique name, then delete the empty file - will be recreated later
-			final File root = File.createTempFile("clifPlugin.test_abs_path", null);
-			final String absolutePath = root.getPath();
-			root.delete();
-
+		// create a unique name, then delete the empty file - will be recreated later
+		final File root = File.createTempFile("clifPlugin.test_abs_path", null);
+		final String absolutePath = root.getPath();
+		root.delete();
 
 /* En commentaire tant que Clif-core embarque un Xalan 2.5.1
 
-			final HtmlForm form = webClient.goTo("configure").getFormByName("config");
-			form.getInputByName("clifRootDir").setValueAttribute(absolutePath);
-			submit(form);
+		final HtmlForm form = webClient.goTo("configure").getFormByName("config");
+		form.getInputByName("clifRootDir").setValueAttribute(absolutePath);
+		submit(form);
 
 */
-			// En attendant, on change le test
-			clifPlugin.setClifRootDir(absolutePath);
-			assertEquals("Verify clif root configured at absolute path.", root, clifPlugin.dir());
+		// En attendant, on change le test
+		clifPlugin.setClifRootDir(absolutePath);
+		assertEquals(root, clifPlugin.dir(), "Verify clif root configured at absolute path.");
 
-			root.delete();
-			// not really needed, but helpful so we don't clutter the test host with unnecessary files
-			assertFalse("Verify cleanup of history files: " + root, root.exists());
-
-		}
-		catch (Exception e) {
-			fail("Unable to complete clif root absolute path test: " + e);
-		}
+		root.delete();
+		// not really needed, but helpful so we don't clutter the test host with unnecessary files
+		assertFalse(root.exists(), "Verify cleanup of history files: " + root);
 	}
 
 	@Test
-	public void testGetClifRootDirRelativePath() throws Exception {
+	void testGetClifRootDirRelativePath() {
 		final ClifPlugin clifPlugin = ClifPlugin.get();
-		try {
-			final String relativePath = "clifPlugin.test_rel_path";
-			final File root = new File(hudson.root.getPath() + File.separator + relativePath);
-			root.delete();
+		final String relativePath = "clifPlugin.test_rel_path";
+		final File root = new File(j.jenkins.root.getPath() + File.separator + relativePath);
+		root.delete();
 
 /* En commentaire tant que Clif-core embarque un Xalan 2.5.1
 
-			final HtmlForm form = webClient.goTo("configure").getFormByName("config");
-			form.getInputByName("clifRootDir").setValueAttribute(relativePath);
-			submit(form);
+		final HtmlForm form = webClient.goTo("configure").getFormByName("config");
+		form.getInputByName("clifRootDir").setValueAttribute(relativePath);
+		submit(form);
 
 */
-			// En attendant, on change le test
-			clifPlugin.setClifRootDir(relativePath);
-			assertEquals("Verify clif root configured at relative path.", root, clifPlugin.dir());
-
-		}
-		catch (Exception e) {
-			fail("Unable to complete clif root absolute path test: " + e);
-		}
+		// En attendant, on change le test
+		clifPlugin.setClifRootDir(relativePath);
+		assertEquals(root, clifPlugin.dir(), "Verify clif root configured at relative path.");
 	}
 
 	@Test
-	public void testGetClifRootDefaults() {
+	void testGetClifRootDefaults() {
 		final ClifPlugin clifPlugin = ClifPlugin.get();
 
-		Assert.assertNotNull("Bad default clif root dir", clifPlugin.getClifRootDir());
-		Assert.assertEquals("Bad default clif root dir", "clif", clifPlugin.getClifRootDir());
+		assertNotNull(clifPlugin.getClifRootDir(), "Bad default clif root dir");
+		assertEquals("clif", clifPlugin.getClifRootDir(), "Bad default clif root dir");
 	}
 }

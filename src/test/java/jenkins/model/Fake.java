@@ -44,11 +44,7 @@ public class Fake extends Jenkins {
 	public static Jenkins install() {
 		previous = Jenkins.HOLDER;
 		final Jenkins jenkins = mock(Jenkins.class);
-		Jenkins.HOLDER = new JenkinsHolder() {
-			public Jenkins getInstance() {
-				return jenkins;
-			}
-		};
+		Jenkins.HOLDER = () -> jenkins;
 		return jenkins;
 	}
 

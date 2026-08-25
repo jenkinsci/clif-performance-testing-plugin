@@ -21,16 +21,16 @@
  */
 package org.ow2.clif.jenkins;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ClifJobListenerTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class ClifJobListenerTest {
 
 	@Test
-	public void testBuildGlobForDeletion() {
-
+	void testBuildGlobForDeletion() {
 		ClifBuilder cb = new ClifBuilder("ClifName", null, "dummy.ctp", "report");
 		String glob = ClifJobListener.buildGlobForDeletion(cb);
-		Assert.assertEquals("Bad glob", "report/dummy_*", glob);
+		assertEquals("report/dummy_*", glob, "Bad glob");
 	}
 }

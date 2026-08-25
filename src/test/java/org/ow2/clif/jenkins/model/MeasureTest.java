@@ -20,15 +20,17 @@
  */
 package org.ow2.clif.jenkins.model;
 
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Julien Coste
  */
-public class MeasureTest {
+class MeasureTest {
+
 	@Test
-	public void testErrorPercent() throws Exception {
+	void testErrorPercent() {
 		Measure m = new Measure();
 		m.setSize(9); // number of successful requests
 		m.setCountErrors(1); // number of failed requests

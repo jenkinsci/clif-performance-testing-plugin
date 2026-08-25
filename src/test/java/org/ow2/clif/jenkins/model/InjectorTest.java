@@ -20,22 +20,23 @@
  */
 package org.ow2.clif.jenkins.model;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Julien Coste
  */
-public class InjectorTest {
+class InjectorTest {
+
 	@Test
-	public void testGetMeasureNoMeasure() throws Exception {
+	void testGetMeasureNoMeasure() {
 		Injector injectorWithoutMeasure = new Injector();
 		assertNull(injectorWithoutMeasure.getMeasure("test"));
-
 	}
 
 	@Test
-	public void testGetMeasureWithMeasure() throws Exception {
+	void testGetMeasureWithMeasure() {
 		Measure m = new Measure();
 		m.setName("test");
 
@@ -46,7 +47,7 @@ public class InjectorTest {
 	}
 
 	@Test
-	public void testGetAlarms() throws Exception {
+	void testGetAlarms() {
 		Injector injectorWithoutAlarm = new Injector();
 
 		assertNull(injectorWithoutAlarm.getAlarms(Alarm.Severity.INFO));

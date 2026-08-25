@@ -25,6 +25,7 @@
 		<jenkins.version>${jenkins.baseline}.1</jenkins.version>
 		<gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
 		<java.level>21</java.level>
+		<ban-junit4-imports.skip>false</ban-junit4-imports.skip>
 	</properties>
 
 	<repositories>

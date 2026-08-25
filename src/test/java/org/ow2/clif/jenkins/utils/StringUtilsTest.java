@@ -31,6 +31,7 @@ import static org.ow2.clif.jenkins.utils.StringUtils.isBlank;
 import static org.ow2.clif.jenkins.utils.StringUtils.isNotBlank;
 
 class StringUtilsTest {
+
     @Test
     void isBlankChecks() {
         assertTrue(isBlank(null), "isBlankWithNullIsTrue");

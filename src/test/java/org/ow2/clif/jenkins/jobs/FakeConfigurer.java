@@ -21,12 +21,14 @@
 package org.ow2.clif.jenkins.jobs;
 
 import java.io.File;
+
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.model.FreeStyleProject;
 
 public class FakeConfigurer extends Configurer {
+
 	@Override
-	public FreeStyleProject
-	configure(FreeStyleProject project, File dir, String testPlan) {
+	public FreeStyleProject configure(FreeStyleProject project, File dir, @NonNull String testPlan) {
 		return project;
 	}
 }
