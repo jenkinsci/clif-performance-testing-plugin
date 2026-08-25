@@ -53,7 +53,7 @@ class ClifPluginTest {
 		final String absolutePath = root.getPath();
 		root.delete();
 
-/* En commentaire tant que Clif-core embarque un Xalan 2.5.1
+/* disabled as long as clif-core embeds Xalan 2.5.1
 
 		final HtmlForm form = webClient.goTo("configure").getFormByName("config");
 		form.getInputByName("clifRootDir").setValueAttribute(absolutePath);
