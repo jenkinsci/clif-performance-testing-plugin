@@ -69,7 +69,7 @@ class ClifInstallationTest {
 
 	@Test
 	void testDoCheckInstallationGoodInstall() {
-		assertNotNull(Hudson.getInstanceOrNull(), "L'instance de Jenkins ne doit pas être null");
+		assertNotNull(Hudson.getInstanceOrNull(), "The Jenkins instance should not be null");
 		doCheckInstallation(
 				GOOD_INSTALLATION,
 				SAMPLE_SCHEDULER_URL,
