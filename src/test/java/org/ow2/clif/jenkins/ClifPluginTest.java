@@ -39,7 +39,7 @@ class ClifPluginTest {
 	@BeforeEach
 	void setUp(JenkinsRule rule) {
 		j = rule;
-/* En commentaire tant que Clif-core embarque un Xalan 2.5.1
+/* disabled as long as clif-core embeds Xalan 2.5.1
 		hudson.setSecurityRealm(new HudsonPrivateSecurityRealm(true));
 		webClient = createWebClient();
 */
